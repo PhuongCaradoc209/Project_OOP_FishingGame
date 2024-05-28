@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     //SYSTEM
     public TileManager tileMgr = new TileManager(this);
     public KeyHandler keyHandler = new KeyHandler(this);
-    //    public CollectionManagement collectionM = new CollectionManagement(this);
+    Sound music = new Sound();
     Sound soundEffect = new Sound();
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
@@ -130,7 +130,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        player.update();
+        if (gameState == playState || gameState == autoDisplayState) {
+            if (!music.isPlaying("Bird") && !music.isPlaying("Background")) {
+                playMusic("Bird", 0);
+                playMusic("Background", 2);
+            }
+            player.update();
+        }
     }
 
     public void drawToTempScreen() {
@@ -164,5 +170,21 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
+    }
+
+    public void playMusic(String soundName, int i) {
+        if (!music.isPlaying(soundName)) {
+            music.setField(i);
+            music.loop(soundName);
+        }
+    }
+
+    public void stopMusic(String soundName) {
+        music.stop(soundName);
+    }
+
+    public void playSoundEffect(String soundName, int i) {
+        soundEffect.setField(i);
+        soundEffect.playSE(soundName);
     }
 }

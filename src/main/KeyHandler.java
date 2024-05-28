@@ -74,21 +74,21 @@ public class KeyHandler implements KeyListener {
     public void tittleState(int key) {
         if (key == KeyEvent.VK_W) {
             gp.ui.commandNum--;
-//            gp.playSoundEffect("select_sound", 6);
-//            if (gp.ui.commandNum < 0) {
-//                gp.ui.commandNum = 2;
-//            }
+            gp.playSoundEffect("select_sound", 6);
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 2;
+            }
         }
         if (key == KeyEvent.VK_S) {
             gp.ui.commandNum++;
-//            gp.playSoundEffect("select_sound", 6);
-//            if (gp.ui.commandNum > 2) {
-//                gp.ui.commandNum = 0;
-//            }
+            gp.playSoundEffect("select_sound", 6);
+            if (gp.ui.commandNum > 2) {
+                gp.ui.commandNum = 0;
+            }
         }
         if (key == KeyEvent.VK_ENTER) {
             if (gp.ui.commandNum == 0) {
-//                gp.playSoundEffect("click_sound", 7);
+                gp.playSoundEffect("click_sound", 7);
                 gp.gameState = gp.selectPlayerState;
             }
             if (gp.ui.commandNum == 1) {
@@ -103,25 +103,25 @@ public class KeyHandler implements KeyListener {
     public void selectPlayerState(int key) {
         if (key == KeyEvent.VK_A) {
             gp.ui.commandNum--;
-//            gp.playSoundEffect("select_sound", 6);
+            gp.playSoundEffect("select_sound", 6);
             if (gp.ui.commandNum < 1) {
                 gp.ui.commandNum = 2;
             }
         }
         if (key == KeyEvent.VK_D) {
             gp.ui.commandNum++;
-//            gp.playSoundEffect("select_sound", 6);
+            gp.playSoundEffect("select_sound", 6);
             if (gp.ui.commandNum > 2) {
                 gp.ui.commandNum = 1;
             }
         }
         if (key == KeyEvent.VK_ENTER) {
             if (gp.ui.commandNum == 1) {
-//                gp.playSoundEffect("click_sound", 7);
+                gp.playSoundEffect("click_sound", 7);
                 gp.player.setPlayerImage("Human");
                 gp.gameState = gp.playState;
             } else if (gp.ui.commandNum == 2) {
-//                gp.playSoundEffect("click_sound", 7);
+                gp.playSoundEffect("click_sound", 7);
                 gp.player.setPlayerImage("Dino");
                 gp.gameState = gp.playState;
             }
@@ -153,8 +153,8 @@ public class KeyHandler implements KeyListener {
         }
         if (key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.optionState;
-//            gp.music.stop("Bird");
-//            gp.music.stop("Background");
+            gp.music.stop("Bird");
+            gp.music.stop("Background");
         }
 
 //        if (key == KeyEvent.VK_H) {
