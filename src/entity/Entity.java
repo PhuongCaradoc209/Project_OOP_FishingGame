@@ -11,8 +11,8 @@ import java.util.Objects;
 public abstract class Entity {
     public int worldX;
     public int worldY;
-    public int speed;
 
+    public double speed;
     public BufferedImage up1, up2, down1, down2, right1, right2, left1, left2,
             standUp, standDown, standRight, standLeft;
     public String direction;
