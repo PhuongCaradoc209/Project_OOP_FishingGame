@@ -2,20 +2,25 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import tile.TileManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class Player extends Entity {
-    GamePanel gp;
-    KeyHandler keyH;
-    public final int screenX;
-    public final int screenY;
-    public int hasKey = 0;
+    KeyHandler key;
+    TileManager tileM;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
-        this.keyH = keyH;
+    public double screenX;
+    public double screenY;
+
+    public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
+        super(gp);
+        this.key = key;
+        this.tileM = tileM;
+        size = gp.tileSize + 10;
 
         screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
         screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
@@ -54,98 +59,124 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true
-                || keyH.rightPressed == true) {
-            if (keyH.upPressed == true) {
+        if (key.downPressed || key.upPressed || key.leftPressed || key.rightPressed) {
+            if (key.upPressed) {
                 direction = "up";
-
-            } else if (keyH.downPressed == true) {
+            } else if (key.downPressed) {
                 direction = "down";
-
-            } else if (keyH.leftPressed == true) {
+            } else if (key.leftPressed) {
                 direction = "left";
-                
-            } else if (keyH.rightPressed == true) {
+            } else {
                 direction = "right";
             }
-
-            //CHECK TILE COLLISION
-            collisionOn = false;
-            gp.cChecker.checkTile(this, false);
-
-            //CHECK OBJ COLLISION
-            gp.cChecker.checkObj(this, true);
-
-            // IF COLLISION IS FALSE, PLAYER CAN MOVE
-            if (collisionOn == false) {
-                switch (direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
-
-                    default:
-                        break;
-                }
+        } else {
+            if (Objects.equals(direction, "up")) {
+                direction = "standUp";
+            } else if (Objects.equals(direction, "down")) {
+                direction = "standDown";
+            } else if (Objects.equals(direction, "right")) {
+                direction = "standRight";
+            } else if (Objects.equals(direction, "left")) {
+                direction = "standLeft";
             }
+        }
 
-            spriteCounter++;
+        //UPDATE the solidArea due to zoom in and out
+        solidArea.x = (10 * gp.tileSize) / 48;
+        solidArea.y = (20 * gp.tileSize) / 48;
+        solidArea.width = (30 * gp.tileSize) / 48;
+        solidArea.height = (35 * gp.tileSize) / 48;
 
-            if (spriteCounter > 12) {
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                } else if (spriteNum == 2) {
-                    spriteNum = 1;
-                }
-                spriteCounter = 0;
+
+        //CHECK IF AT EDGE
+        gp.cChecker.checkAtEdge(this);
+
+        //IF COLLISION IS FALSE, PLAYER CAN MOVE
+        if (!collisionOn) {
+            switch (direction) {
+                case "up":
+                    worldY -= speed;
+                    break;
+                case "down":
+                    worldY += speed;
+                    break;
+                case "right":
+                    worldX += speed;
+                    break;
+                case "left":
+                    worldX -= speed;
+                    break;
             }
+        }
+
+        spriteCounter++;
+        if (spriteCounter > 15) {
+            spriteNum = (spriteNum == 2) ? 1 : 2;
+            spriteCounter = 0;
         }
     }
 
-    public void draw(Graphics2D g2) {
-        // g2.setColor(Color.white); // set a color to use for drawing objects
-        // g2.fillRect(x, y, gp.tileSize, gp.tileSize); // draw a rectangle and fills it
-        // with the specified color
-
+    public void draw(Graphics2D g) {
+//        g.setColor(Color.white);
+//        g.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
-
         switch (direction) {
             case "up":
-                if (spriteNum == 1)
+                if (spriteNum == 1) {
                     image = up1;
-                if (spriteNum == 2)
+                }
+                if (spriteNum == 2) {
                     image = up2;
+                }
+//                fishingRod.reset();
                 break;
             case "down":
-                if (spriteNum == 1)
+                if (spriteNum == 1) {
                     image = down1;
-                if (spriteNum == 2)
+                }
+                if (spriteNum == 2) {
                     image = down2;
+                }
+//                fishingRod.reset();
                 break;
             case "left":
-                if (spriteNum == 1)
+                if (spriteNum == 1) {
                     image = left1;
-                if (spriteNum == 2)
+                }
+                if (spriteNum == 2) {
                     image = left2;
+                }
+//                fishingRod.reset();
                 break;
             case "right":
-                if (spriteNum == 1)
+                if (spriteNum == 1) {
                     image = right1;
-                if (spriteNum == 2)
+                }
+                if (spriteNum == 2) {
                     image = right2;
+                }
+//                fishingRod.reset();
                 break;
-
-            default:
+            case "standUp":
+                image = standUp;
+                break;
+            case "standDown":
+                image = standDown;
+                break;
+            case "standRight":
+                image = standRight;
+                break;
+            case "standLeft":
+                image = standLeft;
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+//        ////////////////////////
+//        if(fishingRod.getFrame() != null){
+//            image = fishingRod.getFrame();
+//            g.drawImage(image, (int) (x - ( this.direction=="standLeft" ? (size) : 0)), (int) y, null);
+//        }
+//        else
+//            g.drawImage(image, (int) x, (int) y, size, size, null);
+
     }
 }
