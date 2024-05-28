@@ -15,6 +15,7 @@ public class Player extends Entity {
 
     public double screenX;
     public double screenY;
+    private double x, y;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
         super(gp);
@@ -22,24 +23,28 @@ public class Player extends Entity {
         this.tileM = tileM;
         size = gp.tileSize + 10;
 
-        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
-
-        solidArea.x = 8;
-        solidArea.y = 16;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); //set the player at then center of the screen
+        screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
 
         setDefaultValues();
+
+        //AREA COLLISION
+        solidArea = new Rectangle();
+        solidArea.x = (8 * gp.tileSize) / 48;
+        solidArea.y = (16 * gp.tileSize) / 48;
+        solidArea.width = (32 * gp.tileSize) / 48;
+        solidArea.height = (32 * gp.tileSize) / 48;
+
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
+        direction = "down";
     }
 
-    public void setPlayerImage(String playerType){
-        if (playerType.equals("Human")){
+    public void setPlayerImage(String playerType) {
+        if (playerType.equals("Human")) {
             getPlayerImage_HumanVer();
-        }
-        else
+        } else
             getPlayerImage_DinoVer();
     }
 
@@ -50,7 +55,7 @@ public class Player extends Entity {
         direction = "standDown";
     }
 
-    public void getPlayerImage_DinoVer(){
+    public void getPlayerImage_DinoVer() {
         standUp = setup("player/dino_up_1", 16, 16);
         standDown = setup("player/dino_down_1", 16, 16);
         standRight = setup("player/dino_down_1", 16, 16);
@@ -109,6 +114,9 @@ public class Player extends Entity {
         solidArea.width = (30 * gp.tileSize) / 48;
         solidArea.height = (35 * gp.tileSize) / 48;
 
+        //CHECK TILE COLLISION
+        collisionOn = false;
+        gp.cChecker.checkTile(this, false);
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
@@ -192,7 +200,28 @@ public class Player extends Entity {
                 image = standLeft;
                 break;
         }
-        g.drawImage(image, (int) screenX, (int) screenY, size, size, null);
+        //STOP MOVING THE CAMERA AT EDGE (PLAYER CAN NOT MOVE IF AT EDGE)
+        x = screenX;
+        y = screenY;
+        //TOP
+        if (gp.player.screenX >= worldX) {
+            x = worldX;
+        }
+        //LEFT
+        if (gp.player.screenY >= worldY) {
+            y = worldY;
+        }
+        //RIGHT
+        double rightOffSet = gp.screenWidth - screenX;
+        if (rightOffSet >= gp.worldWidth - worldX) {
+            x = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+        //BOTTOM
+        double bottomOffSet = gp.screenHeight - screenY;
+        if (bottomOffSet >= gp.worldHeight - worldY) {
+            y = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+        g.drawImage(image, (int) x, (int) y, size, size, null);
 
 //        ////////////////////////
 //        if(fishingRod.getFrame() != null){
