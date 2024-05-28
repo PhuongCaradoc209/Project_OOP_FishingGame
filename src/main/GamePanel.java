@@ -25,15 +25,34 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxWorldRow = 25;
     public final int worldWidth = maxWorldCol * tileSize;//2400
     public final int worldHeight = maxWorldRow * tileSize;//2400
-    
+
+    //GAME STATE
+    public int gameState;
+    public final int tittleState = 0;
+    //PLAYER STATE
+    public final int playState = 1;
+    public final int autoDisplayState = 3;
+    public final int dialogueState = 4;
+    public final int notificationState = 5;
+    public final int optionState = 6;
+    public final int afterFishingState = 7;
+    public final int collectionState = 8;
+    public final int fishingState = 9;
+    public final int selectPlayerState = 10;
+    public final int tradeState = 11;
+    public final int transitionState = 12;
+    public final int fishTankState = 13;
+    public final int inventoryState = 14;
+
     // FPS: Frame per second
     int FPS = 60;
 
     //SYSTEM
     public TileManager tileMgr = new TileManager(this);
-    public KeyHandler keyHandler = new KeyHandler();
-    Sound music = new Sound();
+    public KeyHandler keyHandler = new KeyHandler(this);
+    Sound soundEffect = new Sound();
     public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
     Thread gameThread;
 
     //CHECK COLLISION
