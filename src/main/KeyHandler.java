@@ -41,6 +41,10 @@ public class KeyHandler implements KeyListener {
             if (gp.gameState == gp.playState || gp.gameState == gp.autoDisplayState) {
                 gamePlayerState(key);
             }
+
+            else if (gp.gameState == gp.collectionState) {
+                collectionState(key);
+            }
         }
     }
 
@@ -163,9 +167,9 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_C) {
             gp.gameState = gp.collectionState;
         }
-        if (key == KeyEvent.VK_B) {
-            gp.gameState = gp.inventoryState;
-        }
+//        if (key == KeyEvent.VK_B) {
+//            gp.gameState = gp.inventoryState;
+//        }
         if (key == KeyEvent.VK_L) {
             gp.gameState = gp.transitionState;
             temp_map = 1;
@@ -181,4 +185,11 @@ public class KeyHandler implements KeyListener {
             checkDrawTime = (checkDrawTime == true) ? false : true;
         }
     }
+
+    public void collectionState(int key) {
+         if (key == KeyEvent.VK_C || key == KeyEvent.VK_ESCAPE) {
+            gp.gameState = gp.playState;
+        }
+    }
+
 }    
