@@ -16,7 +16,7 @@ public class UI {
     BufferedImage image,fishImage,fishFrame;
     final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
     public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
-//    public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
+    public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
 
     private int counter = 0;
 
@@ -32,7 +32,7 @@ public class UI {
         }
 
         //SET UP COIN IMAGE
-        coin = setup("objects/coin_bronze", gp.tileSize, gp.tileSize);
+        coin = setup("object/coin_bronze", gp.tileSize, gp.tileSize);
 
         //GET TYPE OF CHARACTER
         humanImg = setup("player/human", 1251, 1641);
@@ -58,6 +58,10 @@ public class UI {
         }
         //PLAY STATE
         else if (gp.gameState == gp.playState) {
+        }
+        //COLLECTION STATE
+        else if (gp.gameState == gp.collectionState) {
+            drawCollectionScreen();
         }
     }
 
@@ -251,6 +255,81 @@ public class UI {
         return x;
     }
 
+    public void drawCollectionScreen() {
+        drawCollectionBackground();
+        setFontAndColor(font, new Color(0x74342E));
+
+        g2.drawString("COLLECTIONS", center("COLLECTIONS", gp.tileSize, gp.tileSize * 15 / 2), gp.tileSize * 13 / 4);
+        drawCollectionItemImage_Border_Number();
+    //    drawCursor();
+    //    displayItemIsChosen();
+    //    displayStatistic();
+    }
+
+
+    public void drawCollectionBackground() {
+        int x = gp.tileSize ;
+        int y = gp.tileSize * 3 / 2;
+        int width = gp.tileSize * 15 / 2;
+        int height = gp.tileSize * 19 / 2;
+        Color cbg = new Color(0xF4CE98);
+        Color cs = new Color(0x5e3622);
+        drawSubWindow1(x, y, width, height, cbg, cs, 10, 30);
+        drawSubWindow1(x * 3 / 2 + width, y, gp.tileSize * 21 / 2, gp.tileSize * 5, cbg, cs, 10, 30);
+        drawSubWindow1(x * 3 / 2 + width, gp.tileSize * 7, gp.tileSize * 21 / 2, gp.tileSize * 4, cbg, cs, 10, 30);
+
+    }
+
+    public void drawCollectionItemImage_Border_Number() {
+        int count = 0;
+        int imageAndBorderX = gp.tileSize * 2;
+        int imageAndBorderY = gp.tileSize * 4;
+        int amountX = gp.tileSize * 45 / 16;
+        int amountY = gp.tileSize * 39 / 8;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (count <= 14) {
+                    //draw imageOfFish
+                    gp.collectionM.setImage(gp.collectionM.collection[count]);
+                    g2.drawImage(gp.collectionM.collection[count].fishFinalImage, imageAndBorderX, imageAndBorderY, gp.tileSize, gp.tileSize, null);
+
+                    //draw border
+                    g2.setColor(new Color(0xA26D48));
+                    g2.setStroke(new BasicStroke(5));
+                    g2.drawRoundRect(imageAndBorderX, imageAndBorderY, gp.tileSize + 1, gp.tileSize + 1, 15, 15);
+
+                    //display amount
+                    g2.setFont(font2);
+                    g2.setColor(Color.BLACK);
+                    g2.drawString(String.valueOf(gp.collectionM.collection[count].count), amountX, amountY);
+
+                    imageAndBorderX += gp.tileSize * 3 / 2;
+                    amountX += gp.tileSize * 3 / 2;
+                    count++;
+                }
+            }
+            imageAndBorderX = gp.tileSize * 2;
+            imageAndBorderY += gp.tileSize * 3 / 2;
+            amountX = gp.tileSize * 45 / 16;
+            amountY += gp.tileSize * 3 / 2;
+        }
+    }
+    public void setFontAndColor(Font f, Color c) {
+        g2.setColor(c);
+        g2.setFont(f);
+    }
+
+    public void drawSubWindow1(int x, int y, int width, int height, Color cbg, Color cs, int strokeSize, int arc) {
+        g2.setColor(cbg);
+        g2.fillRoundRect(x, y, width, height, arc, arc);
+        g2.setColor(cs);
+        g2.setStroke(new BasicStroke(strokeSize));
+        g2.drawRoundRect(x, y, width, height, arc, arc);
+    }
+    public int center(String s, int imageX, int imageWidth) {
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
+        return imageX + (imageWidth - textWidth) / 2;
+    }
     public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
