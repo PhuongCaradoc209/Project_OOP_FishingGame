@@ -33,7 +33,14 @@ public class Player extends Entity {
         solidArea.height = 32;
 
         setDefaultValues();
-        getPlayerImage();
+    }
+
+    public void setPlayerImage(String playerType){
+        if (playerType.equals("Human")){
+            getPlayerImage_HumanVer();
+        }
+        else
+            getPlayerImage_DinoVer();
     }
 
     public void setDefaultValues() {
@@ -43,7 +50,22 @@ public class Player extends Entity {
         direction = "standDown";
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImage_DinoVer(){
+        standUp = setup("player/dino_up_1", 16, 16);
+        standDown = setup("player/dino_down_1", 16, 16);
+        standRight = setup("player/dino_down_1", 16, 16);
+        standLeft = setup("player/dino_up_1", 16, 16);
+        up1 = setup("player/dino_up_1", 16, 16);
+        up2 = setup("player/dino_up_2", 16, 16);
+        down1 = setup("player/dino_down_1", 16, 16);
+        down2 = setup("player/dino_down_2", 16, 16);
+        left1 = setup("player/dino_left_1", 16, 16);
+        left2 = setup("player/dino_left_2", 16, 16);
+        right1 = setup("player/dino_right_1", 16, 16);
+        right2 = setup("player/dino_right_2", 16, 16);
+    }
+
+    public void getPlayerImage_HumanVer() {
         standUp = setup("player/standUp", 32, 32);
         standDown = setup("player/standDown", 32, 32);
         standRight = setup("player/right", 32, 32);
@@ -170,6 +192,8 @@ public class Player extends Entity {
                 image = standLeft;
                 break;
         }
+        g.drawImage(image, (int) screenX, (int) screenY, size, size, null);
+
 //        ////////////////////////
 //        if(fishingRod.getFrame() != null){
 //            image = fishingRod.getFrame();
