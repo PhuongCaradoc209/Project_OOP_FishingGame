@@ -1,5 +1,6 @@
 package entity;
 
+import main.GamePanel;
 import main.UtilityTool;
 
 import javax.imageio.ImageIO;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public abstract class Entity {
+    public GamePanel gp;
+    protected int size;
     public int worldX;
     public int worldY;
 
@@ -25,10 +28,27 @@ public abstract class Entity {
     public boolean collisionOn = false;
 
     //OBJ
-
+    public int price;
     public String name;
     public boolean collision = false;
 
+    //Fish
+    public BufferedImage collection_image, tradeState_image;
+    public int fishStar;
+    public String fishRarity;
+    public BufferedImage fishFrame;
+    public int count;
+    public int tradeCount;
+    public boolean caught = false;
+    public BufferedImage fishFinalImage;
+    public String desCollections;
+    public String desFishing;
+    public String desTrading = "";
+
+    public Entity(GamePanel gp) {
+        this.gp = gp;
+        solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
+    }
     public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;

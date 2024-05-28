@@ -1,14 +1,11 @@
 package main;
 
-import entity.Entity;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
-import java.util.Random;
 
 public class UI {
     GamePanel gp;
@@ -16,8 +13,10 @@ public class UI {
     Font pixel;
     Font font, font1, font2, font3, font3a, font4, font4a, font5, font6, font7;
     public int commandNum = 0;
-    BufferedImage image;
+    BufferedImage image,fishImage,fishFrame;
     final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin, bar_outside, bar_background, target;
+    public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
+    public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
 
     private int counter = 0;
 
@@ -33,7 +32,7 @@ public class UI {
         }
 
         //SET UP COIN IMAGE
-        coin = setup("objects/coin_bronze", gp.tileSize, gp.tileSize);
+        coin = setup("object/coin_bronze", gp.tileSize, gp.tileSize);
 
         //GET TYPE OF CHARACTER
         humanImg = setup("player/human", 1251, 1641);
