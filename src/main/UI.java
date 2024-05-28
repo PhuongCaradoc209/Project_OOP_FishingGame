@@ -14,9 +14,9 @@ public class UI {
     Font font, font1, font2, font3, font3a, font4, font4a, font5, font6, font7;
     public int commandNum = 0;
     BufferedImage image,fishImage,fishFrame;
-    final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin, bar_outside, bar_background, target;
+    final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
     public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
-    public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
+//    public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
 
     private int counter = 0;
 
@@ -32,7 +32,7 @@ public class UI {
         }
 
         //SET UP COIN IMAGE
-        coin = setup("object/coin_bronze", gp.tileSize, gp.tileSize);
+        coin = setup("objects/coin_bronze", gp.tileSize, gp.tileSize);
 
         //GET TYPE OF CHARACTER
         humanImg = setup("player/human", 1251, 1641);
@@ -40,11 +40,6 @@ public class UI {
         humanUnselect = setup("player/human_Unselect", 1231, 1652);
         dinoUnselect = setup("player/dino_Unselect", 1252, 1693);
         tittle = setup("background/tittle", gp.screenWidth, gp.screenHeight);
-
-        //SET UP FISHING GAMEPLAY
-        bar_outside = setup("background/bar_outside", 97, 555);
-        bar_background = setup("background/bar_bg", 90, 522);
-        target = setup("background/target", 73,73);
     }
 
     public void draw(Graphics2D g2) {
@@ -190,7 +185,6 @@ public class UI {
             g2.drawString(text, x, y - 7);
         }
 
-
         //DINO
         x += gp.tileSize * 10;
         y = gp.tileSize * 3;
@@ -268,5 +262,4 @@ public class UI {
         }
         return image;
     }
-
 }

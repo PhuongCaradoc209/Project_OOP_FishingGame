@@ -6,9 +6,12 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS
     private final int originalTileSize = 16;
     private final int scale = 3;
@@ -25,6 +28,29 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxWorldRow = 25;
     public final int worldWidth = maxWorldCol * tileSize;//2400
     public final int worldHeight = maxWorldRow * tileSize;//2400
+
+    //FULL SCREEN
+    int screenWidth2 = screenWidth;
+    int screenHeight2 = screenHeight;
+    BufferedImage tempScreen;
+    Graphics2D g2;
+    boolean fullScreenOn = false;
+
+    //SYSTEM
+    public TileManager tileMgr = new TileManager(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
+    //    public CollectionManagement collectionM = new CollectionManagement(this);
+    Sound soundEffect = new Sound();
+    public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
+    Thread gameThread;
+
+    //CHECK COLLISION
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    //PLAYER
+    public Player player = new Player(this, keyHandler, tileMgr);
+    //OBJECT
+    public ArrayList<Entity>[] obj = new ArrayList[maxMap];
 
     //GAME STATE
     public int gameState;
@@ -47,129 +73,96 @@ public class GamePanel extends JPanel implements Runnable{
     // FPS: Frame per second
     int FPS = 60;
 
-    //SYSTEM
-    public TileManager tileMgr = new TileManager(this);
-    public KeyHandler keyHandler = new KeyHandler(this);
-    public CollectionManagement collectionM = new CollectionManagement(this);
-    Sound soundEffect = new Sound();
-    public AssetSetter aSetter = new AssetSetter(this);
-    public UI ui = new UI(this);
-    Thread gameThread;
-
-    //CHECK COLLISION
-    public CollisionChecker cChecker = new CollisionChecker(this);
-
-
-    // ENTITY AND OBJECT
-    public Player player = new Player(this, keyHandler);
-    public ArrayList<Entity>[] obj = new ArrayList[maxMap];
-
     public GamePanel() {
-        this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set size of this class (JPanel)
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
-        this.setDoubleBuffered(true); // if set to true, all the drawing from this component will be done in an offscreen painting buffer
-        this.setFocusable(true); // with this, this GamePanel can be "focused" to reveive key input
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyHandler);
+        this.setVisible(true);
+        this.setFocusable(true);
     }
 
     public void setupGame() {
-
+        gameState = tittleState;
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D) tempScreen.getGraphics();
     }
 
     public void startGameThread() {
-        gameThread = new Thread(this); // "this" means this class (GamePanel)
-        // we're passing Gamepanel class to this Thread's constructor
+        gameThread = new Thread(this);
         gameThread.start();
     }
 
     @Override
-    // public void run() {
-        // double drawInterval = 1000000000/FPS; // draw the screen every 0.016666 seconds (1000000000 nanosecond = 1 second)
-        // double nextDrawTime = System.nanoTime() + drawInterval; // System.nanoTime returns the current system time
-
-        // while(gameThread != null) {
-        //     //long currentTime = System.nanoTime();
-        //     //System.out.println("Current time: " + currentTime); 
-
-
-        //     // 1 UPDATE: update information such as character position
-        //     update();
-
-        //     // 2 DRAW: draw the screen with the updated information
-        //     repaint();
-
-        //     try {
-        //         double remainingTime = nextDrawTime - System.nanoTime();
-        //         remainingTime = remainingTime/1000000; // convert from nano to milliseconds
-
-        //         if(remainingTime < 0) {
-        //             remainingTime = 0;
-        //         }
-
-        //         Thread.sleep((long) remainingTime);
-
-        //         nextDrawTime += drawInterval;
-        //     } catch (InterruptedException e) {
-        //         // TODO Auto-generated catch block
-        //         e.printStackTrace();
-        //     }
-        // }
-    // }
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = (double) 1000000000 / FPS;
+
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+
+        //display FPS
         long timer = 0;
         int drawCount = 0;
-        
-        while (gameThread != null) {
+
+        while (gameThread != null) //as long as gameThread is existed
+        {
             currentTime = System.nanoTime();
 
             delta += (currentTime - lastTime) / drawInterval;
-            timer += (currentTime - lastTime); // (currentTime - lastTime) = past time, in every loop, add past time to this timer
-
+            timer += (currentTime - lastTime);
             lastTime = currentTime;
 
             if (delta >= 1) {
-                // 1 = drawInterval
                 update();
-                repaint();
-                delta --;
+                drawToTempScreen(); //draw to the buffered image
+                drawToScreen(); //draw the buffered image to the screen
+                delta--;
                 drawCount++;
             }
-            
+
             if (timer >= 1000000000) {
-                // timer reachs 1 second
-                System.out.println("FPS: " + drawCount);
+                System.out.println("FPS" + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
         }
-
     }
 
     public void update() {
         player.update();
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void drawToTempScreen() {
+        //DEBUG
+        long drawStart = 0;
+        if (keyHandler.checkDrawTime == true) {
+            drawStart = System.nanoTime();
+        }
+        //TITTLE SCREEN
+        if (gameState != tittleState && currentMap == 0) {
+            //TILE
+            tileMgr.draw(g2);
 
-        Graphics2D g2 = (Graphics2D)g;
+            player.draw(g2);
+        }
 
-        // TILE
-        tileMgr.draw(g2); // this line must be before "player.draw()"
+        //UI
+        ui.draw(g2);
 
-//        // OBJECT
-//        for (int i =  0; i < obj.length; i++) {
-//            if (obj[i] != null) {
-//                obj[i].draw(g2, this);
-//            }
-//        }
+        if (keyHandler.checkDrawTime == true) {
+            long drawEnd = System.nanoTime();
+            long passed = drawEnd - drawStart;
+            g2.setColor(Color.WHITE);
+            g2.drawString("Draw Time: " + passed, 10, 400);
+            System.out.println("Draw Time: " + passed);
+        }
 
-        // PLAYER
-        player.draw(g2);
+    }
 
-        g2.dispose(); // dispose of this graphics context and release any system resources that it is using
+    public void drawToScreen() {
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.dispose();
     }
 }
