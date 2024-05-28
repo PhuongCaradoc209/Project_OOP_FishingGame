@@ -187,7 +187,31 @@ public class KeyHandler implements KeyListener {
     }
 
     public void collectionState(int key) {
-         if (key == KeyEvent.VK_C || key == KeyEvent.VK_ESCAPE) {
+        if (key == KeyEvent.VK_D) {
+            if (gp.ui.collectionSlotCol != 3) {
+                gp.ui.collectionSlotCol++;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_A) {
+            if (gp.ui.collectionSlotCol != 0) {
+                gp.ui.collectionSlotCol--;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_W) {
+            if (gp.ui.collectionSlotRow != 0) {
+                gp.ui.collectionSlotRow--;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_S) {
+            if (gp.ui.collectionSlotRow != 3) {
+                gp.ui.collectionSlotRow++;
+                gp.playSoundEffect("select_sound", 6);
+            }
+
+        } else if (key == KeyEvent.VK_C || key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;
         }
     }
