@@ -165,7 +165,7 @@ public class AssetSetter {
         if (mapNum == 0) {
             gp.animal[mapNum].add(new Animal_Duck(gp));
             gp.animal[mapNum].get(i).worldX = gp.tileSize * 5;
-            gp.animal[mapNum].get(i).worldY = gp.tileSize * 3;
+            gp.animal[mapNum].get(i).worldY = gp.tileSize * 7;
             i++;
 
             gp.animal[mapNum].add(new Animal_Duck(gp));

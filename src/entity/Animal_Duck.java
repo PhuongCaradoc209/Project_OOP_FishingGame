@@ -13,10 +13,10 @@ public class Animal_Duck extends Entity {
         getImage();
         size = gp.tileSize;
 
-        solidArea.x = -5;
-        solidArea.y = 20;
-        solidArea.width = size;
-        solidArea.height = 28;
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = size + 10;
+        solidArea.height = size/2 + 10;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
@@ -35,17 +35,17 @@ public class Animal_Duck extends Entity {
     public void setAction() {
         actionLookCounter++;
         if (actionLookCounter == 120) {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1;
-            if (i <= 25) {
-                direction = "up";
-            } else if (i <= 50) {
-                direction = "down";
-            } else if (i <= 75) {
+//            Random random = new Random();
+//            int i = random.nextInt(100) + 1;
+//            if (i <= 25) {
+//                direction = "up";
+//            } else if (i <= 50) {
+//                direction = "down";
+//            } else if (i <= 75) {
+//                direction = "right";
+//            } else {
                 direction = "right";
-            } else {
-                direction = "left";
-            }
+//            }
             actionLookCounter = 0;
         }
     }
