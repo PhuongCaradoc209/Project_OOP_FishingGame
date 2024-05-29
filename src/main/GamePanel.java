@@ -52,6 +52,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyHandler, tileMgr);
     //OBJECT
     public ArrayList<Entity>[] obj = new ArrayList[maxMap];
+    //ENTITY
+    public ArrayList<Entity>[]
+            npc = new ArrayList[maxMap];
     //ANIMAL
     public ArrayList<Entity>[] animal = new ArrayList[maxMap];
     //Interactive Tile
@@ -91,11 +94,13 @@ public class GamePanel extends JPanel implements Runnable {
         //CREATE ARRAYLIST FOR ENTITY
         for (int i = 0; i < maxMap; i++) {
             obj[i] = new ArrayList<>();
+            npc[i] = new ArrayList<>();
             animal[i] = new ArrayList<>();
         }
         //SET ON MAP
         aSetter.setAnimal(currentMap);
         aSetter.setObject();
+        aSetter.setNPC();
 
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -150,6 +155,11 @@ public class GamePanel extends JPanel implements Runnable {
                 playMusic("Background", 2);
             }
             player.update();
+            for (int i = 0; i < npc[0].size(); i++) {
+                if (npc[0].get(i) != null) {
+                    npc[0].get(i).update(false);
+                }
+            }
             for (int i = 0; i < animal[0].size(); i++) {
                 if (animal[0].get(i) != null) {
                     if (i < 4) {
@@ -176,15 +186,15 @@ public class GamePanel extends JPanel implements Runnable {
             //TILE
             tileMgr.draw(g2);
 
+            //ADD ENTITIES TO THE LIST
             entityList.add(player);
 
-//            for (Entity value : animal[currentMap]) {
-//                if (value != null) {
-//                    value.draw(g2);
-//                }
-//            }
-
             //INTERACTIVE TILE
+            for (Entity entity : npc[currentMap]) {
+                if (entity != null) {
+                    entityList.add(entity);
+                }
+            }
 
             for (Entity value : obj[currentMap]) {
                 if (value != null) {
