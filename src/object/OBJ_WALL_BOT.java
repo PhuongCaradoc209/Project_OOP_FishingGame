@@ -8,7 +8,7 @@ public class OBJ_WALL_BOT extends Entity {
         super(gp);
         size = gp.tileSize;
         name = "Wall bottom";
-        down1 = setup("objects/Wall_bot", gp.tileSize, gp.tileSize);
+        down1 = setup("object/Wall_bot", gp.tileSize, gp.tileSize);
         collision = true;
 
         solidArea.x = 0;

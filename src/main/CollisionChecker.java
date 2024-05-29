@@ -135,6 +135,53 @@ public class CollisionChecker {
 //        return index;
 //    }
 
+    public int checkObj(Entity entity, boolean isPlayer) {
+        int index = 999;
+        for (int i = 0; i < gp.obj[gp.currentMap].size(); i++) {
+            if (gp.obj[gp.currentMap].get(i) != null) {
+                //get the entity's solid area position within the game world
+                entity.solidArea.x = (int) (entity.worldX + entity.solidArea.x);
+                entity.solidArea.y = (int) (entity.worldY + entity.solidArea.y);
+                //get the object's solid area position within the game world
+                gp.obj[gp.currentMap].get(i).solidArea.x = (int) (gp.obj[gp.currentMap].get(i).worldX + gp.obj[gp.currentMap].get(i).solidArea.x);
+                gp.obj[gp.currentMap].get(i).solidArea.y = (int) (gp.obj[gp.currentMap].get(i).worldY + gp.obj[gp.currentMap].get(i).solidArea.y);
+
+                switch (entity.direction) {
+                    //SIMULATING ENTITY'S MOVEMENT AND CHECK WHERE IT WILL BE AFTER IT MOVED
+                    case "up":
+                        entity.solidArea.y -= entity.speed;
+                        break;
+
+                    case "down":
+                        entity.solidArea.y += entity.speed;
+                        break;
+
+                    case "right":
+                        entity.solidArea.x += entity.speed;
+                        break;
+
+                    case "left":
+                        entity.solidArea.x -= entity.speed;
+                        break;
+                }
+                if (entity.solidArea.intersects(gp.obj[gp.currentMap].get(i).solidArea)) {
+                    if (gp.obj[gp.currentMap].get(i).collision == true) {
+                        entity.collisionOn = true;
+                    }
+                    if (isPlayer) {
+                        index = i;
+                    }
+                }
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                gp.obj[gp.currentMap].get(i).solidArea.x = gp.obj[gp.currentMap].get(i).solidAreaDefaultX;
+                gp.obj[gp.currentMap].get(i).solidArea.y = gp.obj[gp.currentMap].get(i).solidAreaDefaultY;
+            }
+        }
+        return index;
+    }
+
+
     public int checkEntity(Entity entity, ArrayList<Entity>[] target) {
         int index = 999;
         for (int i = 0; i < target[gp.currentMap].size(); i++) {

@@ -8,7 +8,7 @@ public class OBJ_WALL_RIGHT extends Entity {
         super(gp);
         size = gp.tileSize;
         name = "Wall right";
-        down1 = setup("objects/Wall_right", gp.tileSize, gp.tileSize);
+        down1 = setup("object/Wall_right", gp.tileSize, gp.tileSize);
         collision = true;
 
         solidArea.x = 28;
