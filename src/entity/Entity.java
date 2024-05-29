@@ -75,7 +75,7 @@ public class Entity {
         collisionOn = isDuck;
 
         if (gp.currentMap == 0){
-//            gp.cChecker.checkObj(this, false);
+            gp.cChecker.checkObj(this, false);
 //            gp.cChecker.checkEntity(this, gp.npc);
             gp.cChecker.checkEntity(this, gp.animal);
             gp.cChecker.checkPlayer(this);

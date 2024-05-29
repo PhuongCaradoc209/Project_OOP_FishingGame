@@ -54,6 +54,8 @@ public class GamePanel extends JPanel implements Runnable {
     public ArrayList<Entity>[] obj = new ArrayList[maxMap];
     //ANIMAL
     public ArrayList<Entity>[] animal = new ArrayList[maxMap];
+    //Interactive Tile
+    ArrayList<Entity> entityList = new ArrayList<>();
 
     //GAME STATE
     public int gameState;
@@ -88,10 +90,12 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         //CREATE ARRAYLIST FOR ENTITY
         for (int i = 0; i < maxMap; i++) {
+            obj[i] = new ArrayList<>();
             animal[i] = new ArrayList<>();
         }
         //SET ON MAP
         aSetter.setAnimal(currentMap);
+        aSetter.setObject();
 
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -172,13 +176,43 @@ public class GamePanel extends JPanel implements Runnable {
             //TILE
             tileMgr.draw(g2);
 
-            player.draw(g2);
+            entityList.add(player);
+
+//            for (Entity value : animal[currentMap]) {
+//                if (value != null) {
+//                    value.draw(g2);
+//                }
+//            }
+
+            //INTERACTIVE TILE
+
+            for (Entity value : obj[currentMap]) {
+                if (value != null) {
+                    entityList.add(value);
+                }
+            }
 
             for (Entity value : animal[currentMap]) {
                 if (value != null) {
-                    value.draw(g2);
+                    entityList.add(value);
                 }
             }
+
+            //SORT
+            Collections.sort(entityList, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    return Integer.compare((int) e1.worldY, (int) e2.worldY);
+                }
+            });
+
+            //DRAW ENTITIES
+            for (Entity entity : entityList) {
+                entity.draw(g2);
+            }
+
+            //REMOVE ENTITIES TO THE LIST (otherwise, the list become larger after every loop)
+            entityList.clear();
         }
 
         //UI
