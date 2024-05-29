@@ -80,6 +80,10 @@ public class UI {
         else if (gp.gameState == gp.collectionState) {
             drawCollectionScreen();
         }
+        //INVENTORY STATE
+        else if (gp.gameState == gp.inventoryState) {
+            drawInventoryScreen();
+        }
     }
 
     public void drawTittleScreen() {
@@ -420,6 +424,20 @@ public class UI {
     public void setFontAndColor(Font f, Color c) {
         g2.setColor(c);
         g2.setFont(f);
+    }
+
+    public void drawInventoryScreen() {
+        //DRAW BACKGROUND
+        int x = gp.tileSize * 11 / 2;
+        int y = gp.tileSize * 3 / 4;
+        drawSubWindow1(x, y, gp.tileSize * 9, gp.tileSize * 11, new Color(0xF4CE98), new Color(0x5e3622), 7, 30);
+        drawSubWindow1(x + gp.tileSize * 1 / 2, y + gp.tileSize * 3 / 4, gp.tileSize * 8, gp.tileSize * 3, new Color(0xF4CE98), new Color(0x5e3622), 3, 30);
+
+        // DRAW INVENTORY TITLE
+        drawSubWindow1(gp.tileSize * 15 / 2, 5 + gp.tileSize / 4, gp.tileSize * 5, gp.tileSize - 10, new Color(0xF4CE98), new Color(0x5e3622), 5, 30);
+        setFontAndColor(font5, new Color(0x7B342E));
+        g2.drawString("INVENTORY", center("INVENTORY", gp.tileSize * 11 / 2, gp.tileSize * 9), gp.tileSize);
+
     }
 
     public void drawSubWindow1(int x, int y, int width, int height, Color cbg, Color cs, int strokeSize, int arc) {
