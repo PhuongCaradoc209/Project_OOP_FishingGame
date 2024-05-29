@@ -14,6 +14,7 @@ public class UI {
     Font font, font1, font2, font3, font3a, font4, font4a, font5, font6, font7;
     public int commandNum = 0;
     public int collectionSlotCol = 0,collectionSlotRow = 0;
+    public int inventorySlotCol =0, inventorySlotRow = 0;
     BufferedImage image,fishImage,fishFrame;
     final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
     public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
@@ -438,6 +439,43 @@ public class UI {
         setFontAndColor(font5, new Color(0x7B342E));
         g2.drawString("INVENTORY", center("INVENTORY", gp.tileSize * 11 / 2, gp.tileSize * 9), gp.tileSize);
 
+        // DRAW INVENTORY
+        x = gp.tileSize*49/8;
+        y +=  gp.tileSize*4;
+        for(int i = 0; i <gp.player.inventory.size();i++){
+            g2.drawImage(gp.player.inventory.get(i).collection_image,x,y,gp.tileSize*5/4,gp.tileSize*5/4,null);
+            drawSubWindow1(x,y,gp.tileSize*5/4,gp.tileSize*5/4,new Color(0,0,0,0),new Color(0x5e3622),3,5);
+            x += gp.tileSize*13/8;
+            if(i == 4|| i == 9 || i==14|| i ==19){
+                x =gp.tileSize*49/8;
+                y +=  gp.tileSize*13/8;
+            }
+        }
+
+        //DRAW CURSOR
+        final int xStart = gp.tileSize * 49/8;
+        final int yStart = gp.tileSize * 19/4;
+
+        int cursorX = xStart + (gp.tileSize * 13/8 * inventorySlotCol);
+        int cursorY = yStart + (gp.tileSize * 13/8 * inventorySlotRow);
+        drawSubWindow1(cursorX,cursorY,gp.tileSize*5/4,gp.tileSize*5/4,new Color(0,0,0,0),new Color(0xD46352),3,5);
+
+        //DISPLAY INFORMATION
+        int choose = inventorySlotCol + 5*inventorySlotRow;
+        x = gp.tileSize*13/2;
+        y = gp.tileSize*2;
+        if (choose < gp.player.inventory.size() ) {
+            g2.drawImage(gp.player.inventory.get(choose).collection_image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+            setFontAndColor(font4,new Color(0x7B342E));
+            x += gp.tileSize*3;
+            y += 40;
+            g2.drawString("Name: "+gp.player.inventory.get(choose).name,x,y);
+            y+= 30;
+            g2.drawString("Price: "+gp.player.inventory.get(choose).price,x,y);
+            y+= 30;
+            g2.drawString("Current quantity: "+gp.player.inventory.get(choose).tradeCount,x,y);
+
+        }
     }
 
     public void drawSubWindow1(int x, int y, int width, int height, Color cbg, Color cs, int strokeSize, int arc) {

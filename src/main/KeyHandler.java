@@ -14,6 +14,7 @@ public class KeyHandler implements KeyListener {
     public boolean isMove = false;
     int temp_map;
     double temp_woldX, temp_woldY;
+
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
     }
@@ -40,13 +41,9 @@ public class KeyHandler implements KeyListener {
             //PLAY STATE
             if (gp.gameState == gp.playState || gp.gameState == gp.autoDisplayState) {
                 gamePlayerState(key);
-            }
-
-            else if (gp.gameState == gp.collectionState) {
+            } else if (gp.gameState == gp.collectionState) {
                 collectionState(key);
-            }
-
-            else if (gp.gameState == gp.inventoryState) {
+            } else if (gp.gameState == gp.inventoryState) {
                 inventoryState(key);
             }
         }
@@ -220,10 +217,36 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    public void inventoryState(int key) {
+        if (key == KeyEvent.VK_D) {
+            if (gp.ui.inventorySlotCol != 4) {
+                gp.ui.inventorySlotCol++;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_A) {
+            if (gp.ui.inventorySlotCol != 0) {
+                gp.ui.inventorySlotCol--;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_W) {
+            if (gp.ui.inventorySlotRow != 0) {
+                gp.ui.inventorySlotRow--;
+                gp.playSoundEffect("select_sound", 6);
+            }
+        }
+        if (key == KeyEvent.VK_S) {
+            if (gp.ui.inventorySlotRow != 3) {
+                gp.ui.inventorySlotRow++;
+                gp.playSoundEffect("select_sound", 6);
+            }
 
-    public void inventoryState(int key){
-        if (key == KeyEvent.VK_B || key == KeyEvent.VK_ESCAPE) {
+        } else if (key == KeyEvent.VK_B || key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;
         }
     }
+
 }
+
+
