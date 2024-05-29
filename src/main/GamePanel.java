@@ -52,6 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyHandler, tileMgr);
     //OBJECT
     public ArrayList<Entity>[] obj = new ArrayList[maxMap];
+    //ANIMAL
+    public ArrayList<Entity>[] animal = new ArrayList[maxMap];
 
     //GAME STATE
     public int gameState;
@@ -84,6 +86,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        //CREATE ARRAYLIST FOR ENTITY
+        for (int i = 0; i < maxMap; i++) {
+            animal[i] = new ArrayList<>();
+        }
+        //SET ON MAP
+        aSetter.setAnimal(currentMap);
+
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
@@ -137,7 +146,19 @@ public class GamePanel extends JPanel implements Runnable {
                 playMusic("Background", 2);
             }
             player.update();
+            for (int i = 0; i < animal[0].size(); i++) {
+                if (animal[0].get(i) != null) {
+                    if (i < 4) {
+                        animal[0].get(i).update(true);
+                    } else animal[0].get(i).update(false);
+                }
+            }
         }
+    }
+    public void drawToScreen() {
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.dispose();
     }
 
     public void drawToTempScreen() {
@@ -152,6 +173,12 @@ public class GamePanel extends JPanel implements Runnable {
             tileMgr.draw(g2);
 
             player.draw(g2);
+
+            for (Entity value : animal[currentMap]) {
+                if (value != null) {
+                    value.draw(g2);
+                }
+            }
         }
 
         //UI
@@ -165,12 +192,6 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Draw Time: " + passed);
         }
 
-    }
-
-    public void drawToScreen() {
-        Graphics g = getGraphics();
-        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
-        g.dispose();
     }
 
     public void playMusic(String soundName, int i) {
