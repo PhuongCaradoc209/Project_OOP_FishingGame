@@ -1,5 +1,6 @@
 package main;
 
+import entity.Animal_Cow;
 import entity.Animal_Duck;
 import object.*;
 
@@ -171,6 +172,11 @@ public class AssetSetter {
             gp.animal[mapNum].add(new Animal_Duck(gp));
             gp.animal[mapNum].get(i).worldX = gp.tileSize * 5;
             gp.animal[mapNum].get(i).worldY = gp.tileSize * 20;
+            i++;
+
+            gp.animal[mapNum].add(new Animal_Cow(gp));
+            gp.animal[mapNum].get(i).worldX = gp.tileSize * 17;
+            gp.animal[mapNum].get(i).worldY = gp.tileSize * 2;
             i++;
         }
     }
