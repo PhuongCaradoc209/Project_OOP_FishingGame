@@ -1,6 +1,7 @@
 package main;
 
 import entity.Animal_Duck;
+import entity.NPC_OldMan;
 import object.*;
 
 public class AssetSetter {
@@ -147,6 +148,14 @@ public class AssetSetter {
         gp.obj[mapNum].get(i).worldY = (13 * gp.tileSize) - 15;
         i++;
 
+    }
+
+    public void setNPC() {
+        mapNum = 0;
+
+        gp.npc[mapNum].add(new NPC_OldMan(gp));
+        gp.npc[mapNum].get(0).worldX = gp.tileSize * 20;
+        gp.npc[mapNum].get(0).worldY = gp.tileSize * 8;
     }
 
     public void setAnimal(int mapNum) {

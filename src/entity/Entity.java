@@ -70,13 +70,37 @@ public class Entity {
     public void setAction() {
     }
 
+    public void speak() {
+        if (dialogues[dialogueIndex] == null) {
+            gp.gameState = gp.playState;
+            dialogueIndex = 0;
+        } else {
+            gp.ui.currentDialogue = dialogues[dialogueIndex];
+            dialogueIndex++;
+            switch (gp.player.direction) {
+                case "up":
+                    direction = "down";
+                    break;
+                case "down":
+                    direction = "up";
+                    break;
+                case "left":
+                    direction = "right";
+                    break;
+                case "right":
+                    direction = "left";
+                    break;
+            }
+        }
+    }
+
     public void update(boolean isDuck) {
         setAction();
         collisionOn = isDuck;
 
         if (gp.currentMap == 0){
             gp.cChecker.checkObj(this, false);
-//            gp.cChecker.checkEntity(this, gp.npc);
+            gp.cChecker.checkEntity(this, gp.npc);
             gp.cChecker.checkEntity(this, gp.animal);
             gp.cChecker.checkPlayer(this);
         }

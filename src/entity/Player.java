@@ -15,8 +15,10 @@ public class Player extends Entity {
 
     public double screenX;
     public double screenY;
+    public int interactEntity_Index;
+    public ArrayList<Entity> interactEntity;
     private double x, y;
-    private int objIndex;
+    private int npcIndex, objIndex;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
         super(gp);
@@ -24,10 +26,14 @@ public class Player extends Entity {
         this.tileM = tileM;
         size = gp.tileSize + 10;
 
+        setDefaultValues();
+
         screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); //set the player at then center of the screen
         screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
 
-        setDefaultValues();
+        interactEntity = new ArrayList<>();
+
+
 
         //AREA COLLISION
         solidArea = new Rectangle();
@@ -107,6 +113,8 @@ public class Player extends Entity {
             } else if (Objects.equals(direction, "left")) {
                 direction = "standLeft";
             }
+            // STOP SOUND
+            gp.stopMusic("grass");
         }
 
         //UPDATE the solidArea due to zoom in and out
@@ -115,12 +123,27 @@ public class Player extends Entity {
         solidArea.width = (30 * gp.tileSize) / 48;
         solidArea.height = (35 * gp.tileSize) / 48;
 
+        //CHECK AUTO DISPLAY
+        if (!interactEntity.contains(gp.npc[0].get(0))) {
+            interactEntity.add(gp.npc[0].get(0));
+        }
+
+        interactEntity_Index = checkNear(interactEntity);
+
+        if (interactEntity_Index <= interactEntity.size()) {
+            messageOn(interactEntity.get(interactEntity_Index));
+        }
+
         //CHECK TILE COLLISION
         collisionOn = false;
         gp.cChecker.checkTile(this, false);
 
         //CHECK OBJ COLLISION
         objIndex = gp.cChecker.checkObj(this, true);
+
+        //CHECK NPC COLLISION
+        npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+        interactNPC(npcIndex);
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
@@ -148,6 +171,67 @@ public class Player extends Entity {
             spriteNum = (spriteNum == 2) ? 1 : 2;
             spriteCounter = 0;
         }
+    }
+
+    public void interactNPC(int i) {
+        if (i != 999) {
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[gp.currentMap].get(i).speak();
+            }
+        }
+        gp.keyHandler.enterPressed = false;
+    }
+
+    public void messageOn(Entity target) {
+        if (gp.gameState == gp.autoDisplayState) {
+            switch (target.name) {
+                case "old man":
+                    if (gp.keyHandler.enterPressed) {
+                        gp.gameState = gp.dialogueState;
+                        target.speak();
+                        gp.playSoundEffect("oldMan", 3);
+                    } else {
+                        gp.stopMusic("oldMan");
+                    }
+                    break;
+                case "Cow":
+                    if (gp.keyHandler.enterPressed) {
+                        // gp.gameState = gp.dialogueState;
+                        target.speak();
+                    }
+                    break;
+            }
+        }
+        gp.keyHandler.enterPressed = false;
+    }
+
+    public int checkNear(ArrayList<Entity> target) {
+        int playerCol = (int) ((worldX + gp.tileSize / 2) / gp.tileSize);
+        int playerRow = (int) ((worldY + gp.tileSize / 2) / gp.tileSize);
+        int targetCol;
+        int targetRow;
+        for (int i = 0; i < target.size(); i++) {
+            targetCol = (int) (target.get(i).worldX / gp.tileSize);
+            targetRow = (int) (target.get(i).worldY / gp.tileSize);
+
+            if (playerCol == targetCol && playerRow - 1 == targetRow) {
+                gp.gameState = gp.autoDisplayState;
+                return i;
+            } else if (playerCol == targetCol && playerRow + 1 == targetRow) {
+                gp.gameState = gp.autoDisplayState;
+                return i;
+            } else if (playerCol + 1 == targetCol && playerRow == targetRow) {
+                gp.gameState = gp.autoDisplayState;
+                return i;
+            } else if (playerCol - 1 == targetCol && playerRow == targetRow) {
+                gp.gameState = gp.autoDisplayState;
+                return i;
+            } else {
+                gp.gameState = gp.playState;
+            }
+        }
+        return 999;
     }
 
     public void draw(Graphics2D g) {

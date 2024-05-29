@@ -1,5 +1,7 @@
 package main;
 
+import entity.Entity;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,6 +14,7 @@ public class UI {
     Graphics2D g2;
     Font pixel;
     Font font, font1, font2, font3, font3a, font4, font4a, font5, font6, font7;
+    public String currentDialogue = "";
     public int commandNum = 0;
     public int collectionSlotCol = 0,collectionSlotRow = 0;
     public int inventorySlotCol =0, inventorySlotRow = 0;
@@ -19,6 +22,7 @@ public class UI {
     final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
     public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
     public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
+    public Entity npc;
 
     private int counter = 0;
 
@@ -475,6 +479,68 @@ public class UI {
             y+= 30;
             g2.drawString("Current quantity: "+gp.player.inventory.get(choose).tradeCount,x,y);
 
+        }
+    }
+
+    public void drawDialogueInteract() {
+        double worldX, worldY;
+        double screenX, screenY;
+        int imageWidth, imageHeight;
+        if (gp.player.interactEntity.get(gp.player.interactEntity_Index).name.equals("old man")) {
+            worldX = gp.tileSize * 19.7;
+            worldY = gp.tileSize * 8;
+            imageWidth = gp.tileSize / 2;
+            imageHeight = gp.tileSize / 2;
+            //Coordinate for the screen
+            screenX = worldX - gp.player.worldX + gp.player.screenX;
+            screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+            image = setup("Dialog/dialog", 28, 29);
+        } else {
+            worldX = gp.tileSize * 16.8;
+            worldY = gp.tileSize * 1.5;
+            imageWidth = gp.tileSize;
+            imageHeight = gp.tileSize;
+            //Coordinate for the screen
+            screenX = worldX - gp.player.worldX + gp.player.screenX;
+            screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+            image = setup("Dialog/CowDialog", 100, 85);
+        }
+
+        //STOP MOVING THE CAMERA AT EDGE (DIALOG CAN NOT MOVE IF AT EDGE)
+        //TOP
+        if (gp.player.screenX >= gp.player.worldX) {
+            screenX = worldX;
+        }
+        //LEFT
+        if (gp.player.screenY >= gp.player.worldY) {
+            screenY = worldY;
+        }
+        //RIGHT
+        double rightOffSet = gp.screenWidth - gp.player.screenX;
+        if (rightOffSet >= gp.worldWidth - gp.player.worldX) {
+            screenX = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+        //BOTTOM
+        double bottomOffSet = gp.screenHeight - gp.player.screenY;
+        if (bottomOffSet >= gp.worldHeight - gp.player.worldY) {
+            screenY = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+        ////////////////////////
+
+        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+            g2.drawImage(image, (int) screenX, (int) screenY, imageWidth, imageHeight, null);
+        }
+        //IF PLAYER AT THE EDGE
+        else if (gp.player.screenX > gp.player.worldX ||
+                gp.player.screenY > gp.player.worldY ||
+                rightOffSet > gp.worldWidth - gp.player.worldX ||
+                bottomOffSet > gp.worldHeight - gp.player.worldY) {
+            g2.drawImage(image, (int) screenX, (int) screenY, imageWidth, imageHeight, null);
         }
     }
 

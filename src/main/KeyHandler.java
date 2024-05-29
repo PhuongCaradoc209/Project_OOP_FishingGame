@@ -41,9 +41,18 @@ public class KeyHandler implements KeyListener {
             //PLAY STATE
             if (gp.gameState == gp.playState || gp.gameState == gp.autoDisplayState) {
                 gamePlayerState(key);
-            } else if (gp.gameState == gp.collectionState) {
+            }
+
+            //DIALOG STATE
+            else if (gp.gameState == gp.dialogueState) {
+                dialogState(key);
+            }
+
+            else if (gp.gameState == gp.collectionState) {
                 collectionState(key);
-            } else if (gp.gameState == gp.inventoryState) {
+            }
+
+            else if (gp.gameState == gp.inventoryState) {
                 inventoryState(key);
             }
         }
@@ -244,6 +253,14 @@ public class KeyHandler implements KeyListener {
 
         } else if (key == KeyEvent.VK_B || key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void dialogState(int key) {
+        if (key == KeyEvent.VK_ENTER) {
+            if (gp.npc[gp.currentMap].get(0).dialogueIndex < gp.npc[gp.currentMap].get(0).dialogues.length) {
+                gp.npc[gp.currentMap].get(0).speak();
+            }
         }
     }
 
