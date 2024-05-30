@@ -13,10 +13,10 @@ public class Animal_Duck extends Entity {
         getImage();
         size = gp.tileSize;
 
-        solidArea.x = -5;
-        solidArea.y = 20;
-        solidArea.width = size;
-        solidArea.height = 28;
+        solidArea.x = 0;
+        solidArea.y = 0;
+        solidArea.width = size + 10;
+        solidArea.height = size/2 + 10;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
     }
