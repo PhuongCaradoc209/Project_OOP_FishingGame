@@ -35,17 +35,17 @@ public class Animal_Duck extends Entity {
     public void setAction() {
         actionLookCounter++;
         if (actionLookCounter == 120) {
-//            Random random = new Random();
-//            int i = random.nextInt(100) + 1;
-//            if (i <= 25) {
-//                direction = "up";
-//            } else if (i <= 50) {
-//                direction = "down";
-//            } else if (i <= 75) {
-//                direction = "right";
-//            } else {
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;
+            if (i <= 25) {
+                direction = "up";
+            } else if (i <= 50) {
+                direction = "down";
+            } else if (i <= 75) {
                 direction = "right";
-//            }
+            } else {
+                direction = "left";
+            }
             actionLookCounter = 0;
         }
     }
