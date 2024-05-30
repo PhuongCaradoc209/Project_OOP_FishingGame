@@ -48,6 +48,7 @@ public class KeyHandler implements KeyListener {
                 dialogState(key);
             }
 
+            //COLLECTION STATE
             else if (gp.gameState == gp.collectionState) {
                 collectionState(key);
             }

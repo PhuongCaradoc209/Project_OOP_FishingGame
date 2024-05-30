@@ -89,6 +89,11 @@ public class UI {
         else if (gp.gameState == gp.inventoryState) {
             drawInventoryScreen();
         }
+        //DIALOGUE STATE
+        else if (gp.gameState == gp.dialogueState) {
+//            drawPlayerInformation();
+            drawDialogueScreen();
+        }
     }
 
     public void drawTittleScreen() {
@@ -479,6 +484,26 @@ public class UI {
             y+= 30;
             g2.drawString("Current quantity: "+gp.player.inventory.get(choose).tradeCount,x,y);
 
+        }
+    }
+
+    public void drawDialogueScreen() {
+        //WINDOW
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize;
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 3;
+
+        drawSubWindow1(x, y, width, height,new Color(0xF4CE98), new Color(0x5e3622),10,30);
+
+        //TEXT
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(line, x, y);
+            y += 40;
         }
     }
 
