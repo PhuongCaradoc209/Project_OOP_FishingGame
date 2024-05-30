@@ -17,6 +17,7 @@ public class Player extends Entity {
     public double screenY;
     public int interactEntity_Index;
     public ArrayList<Entity> interactEntity;
+    public Entity currentFishingRod;
     private double x, y;
     private int npcIndex, objIndex, animalIndex;
 
@@ -60,6 +61,9 @@ public class Player extends Entity {
         worldY = gp.tileSize * 7;
         speed = (double) gp.worldWidth / 400;
         direction = "standDown";
+
+        //PlayerStatus
+//        currentFishingRod = new OBJ_FishingRod1(gp);
     }
 
     public void getPlayerImage_DinoVer() {
@@ -236,6 +240,46 @@ public class Player extends Entity {
         }
         return 999;
     }
+
+    public boolean canObtainItem(Entity item) {
+        boolean canContain = false;
+
+        //Check if stackable
+        if (item.stackable == true) {
+            int index = searchItemInInventory(item.name);
+
+            if (index != 999) {
+                inventory.get(index).amount++;
+                canContain = true;
+            } else {
+                //New item so need to track vacancy
+                if (inventory.size() != maxInventorySize) {
+                    inventory.add(item);
+                    canContain = true;
+                }
+            }
+        } else {
+            //Not stackable so check vacancy
+            if (inventory.size() != maxInventorySize) {
+                inventory.add(item);
+                canContain = true;
+            }
+        }
+        return canContain;
+    }
+
+    public int searchItemInInventory(String itemName) {
+        int itemIndex = 50;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).name.equals(itemName)) {
+                itemIndex = i;
+                break;
+            }
+        }
+        return itemIndex;
+    }
+
 
     public void draw(Graphics2D g) {
 //        g.setColor(Color.white);

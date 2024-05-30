@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import object.Fish_Koicarp;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -49,7 +50,7 @@ public class NPC_OldMan extends Entity {
 
     public void speak() {
         super.speak();
-//        gp.gameState = gp.tradeState;
+        gp.gameState = gp.tradeState;
         gp.ui.npc = this;
     }
 
