@@ -18,7 +18,7 @@ public class Player extends Entity {
     public int interactEntity_Index;
     public ArrayList<Entity> interactEntity;
     private double x, y;
-    private int npcIndex, objIndex;
+    private int npcIndex, objIndex, animalIndex;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
         super(gp);
@@ -144,6 +144,9 @@ public class Player extends Entity {
         //CHECK NPC COLLISION
         npcIndex = gp.cChecker.checkEntity(this, gp.npc);
         interactNPC(npcIndex);
+
+        //CHECK ANIMAL COLLISION
+        animalIndex = gp.cChecker.checkEntity(this, gp.animal);
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
