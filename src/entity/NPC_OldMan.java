@@ -1,6 +1,7 @@
 package entity;
 
 import main.GamePanel;
+import object.Fish_Koicarp;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
