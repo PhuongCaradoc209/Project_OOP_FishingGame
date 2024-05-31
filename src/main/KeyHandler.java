@@ -48,6 +48,16 @@ public class KeyHandler implements KeyListener {
                 dialogState(key);
             }
 
+            // // FISHING STATE
+            // else if (gp.gameState == gp.fishingState) {
+            //     fishingState(key);
+            // }
+
+            // AFTER FISHING STATE
+            else if (gp.gameState == gp.afterFishingState) {
+                afterFishingState(key);
+            }
+
             //COLLECTION STATE
             else if (gp.gameState == gp.collectionState) {
                 collectionState(key);
@@ -268,6 +278,21 @@ public class KeyHandler implements KeyListener {
             if (gp.npc[gp.currentMap].get(0).dialogueIndex < gp.npc[gp.currentMap].get(0).dialogues.length) {
                 gp.npc[gp.currentMap].get(0).speak();
             }
+        }
+    }
+
+    // Fishing rod
+    public void notificationState(int key) {
+        if (key == KeyEvent.VK_SPACE) {
+            gp.player.fishingRod.reset();
+            gp.gameState = gp.playState;
+        }
+    }
+
+    public void afterFishingState(int key) {
+        if (key == KeyEvent.VK_ENTER) {
+            gp.player.fishingRod.reset();
+            gp.gameState = gp.playState;
         }
     }
 
