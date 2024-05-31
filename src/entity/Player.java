@@ -112,6 +112,8 @@ public class Player extends Entity {
             } else {
                 direction = "right";
             }
+            // SET SOUND
+            setTileSound(tileM);
         } else {
             if (Objects.equals(direction, "up")) {
                 direction = "standUp";
@@ -199,6 +201,19 @@ public class Player extends Entity {
             }
         }
         gp.keyHandler.enterPressed = false;
+    }
+
+    private void setTileSound(TileManager tileM) {
+        //getPLayerCol and Row at the center point of player
+        int playerCol = (int) ((worldX + gp.tileSize / 2) / gp.tileSize);
+        int playerRow = (int) ((worldY + gp.tileSize / 2) / gp.tileSize);
+        int tileIndex = tileM.mapTileNum[gp.currentMap][playerRow][playerCol];
+
+        if (tileIndex > 0 && tileIndex < 27 && tileIndex != 16 && tileIndex != 17 && tileIndex != 18) {
+            gp.playMusic("grass", 1);
+        } else {
+            gp.stopMusic("grass");
+        }
     }
 
     public void messageOn(Entity target) {
