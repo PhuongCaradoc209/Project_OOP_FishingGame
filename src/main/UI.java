@@ -61,10 +61,6 @@ public class UI {
         font5 = pixel.deriveFont(Font.BOLD, 38f);
         font6 = pixel.deriveFont(Font.PLAIN, 18f);
         font7 = pixel.deriveFont(Font.BOLD, 15f);
-
-
-
-
     }
 
     public void draw(Graphics2D g2) {
@@ -86,8 +82,11 @@ public class UI {
         }
         //DIALOGUE STATE
         else if (gp.gameState == gp.dialogueState) {
-//            drawPlayerInformation();
             drawDialogueScreen();
+        }
+        //AUTO DISPLAY STATE
+        else if (gp.gameState == gp.autoDisplayState) {
+            drawDialogueInteract();
         }
         //COLLECTION STATE
         else if (gp.gameState == gp.collectionState) {
@@ -97,11 +96,12 @@ public class UI {
         else if (gp.gameState == gp.inventoryState) {
             drawInventoryScreen();
         }
+
         //TRADE STATE
         if (gp.gameState == gp.tradeState) {
-//            drawPlayerInformation();
             drawTradeScreen();
         }
+
     }
 
     public void drawTittleScreen() {
@@ -276,22 +276,6 @@ public class UI {
         //MAIN COLOR TEXT
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
-    }
-
-    public int getXforCenteredText(String text) {
-        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        return gp.screenWidth / 2 - length / 2;
-    }
-
-    public int getItemIndexOnSlot(int slotCol, int slotRow) {
-        int itemIndex = slotCol + (slotRow * 5);
-        return itemIndex;
-    }
-
-    public int getXforAlignToRightText(String text, int tailX) {
-        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = tailX - length;
-        return x;
     }
 
     public void drawCollectionScreen() {
@@ -940,17 +924,29 @@ public class UI {
         }
     }
 
-
+    public int getXforCenteredText(String text) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        return gp.screenWidth / 2 - length / 2;
+    }
+    public int center(String s, int imageX, int imageWidth) {
+        int textWidth = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
+        return imageX + (imageWidth - textWidth) / 2;
+    }
+    public int getItemIndexOnSlot(int slotCol, int slotRow) {
+        int itemIndex = slotCol + (slotRow * 5);
+        return itemIndex;
+    }
+    public int getXforAlignToRightText(String text, int tailX) {
+        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = tailX - length;
+        return x;
+    }
     public void drawSubWindow1(int x, int y, int width, int height, Color cbg, Color cs, int strokeSize, int arc) {
         g2.setColor(cbg);
         g2.fillRoundRect(x, y, width, height, arc, arc);
         g2.setColor(cs);
         g2.setStroke(new BasicStroke(strokeSize));
         g2.drawRoundRect(x, y, width, height, arc, arc);
-    }
-    public int center(String s, int imageX, int imageWidth) {
-        int textWidth = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
-        return imageX + (imageWidth - textWidth) / 2;
     }
     public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
