@@ -136,6 +136,9 @@ public class Player extends Entity {
         if (!interactEntity.contains(gp.npc[0].get(0))) {
             interactEntity.add(gp.npc[0].get(0));
         }
+        if (!interactEntity.contains(gp.animal[0].get(4))) {
+            interactEntity.add(gp.animal[0].get(4));
+        }
 
         interactEntity_Index = checkNear(interactEntity);
 
