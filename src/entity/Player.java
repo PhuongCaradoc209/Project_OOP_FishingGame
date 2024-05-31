@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.Fishing_Rod;
 import tile.TileManager;
 
 import java.awt.*;
@@ -20,12 +21,16 @@ public class Player extends Entity {
     public Entity currentFishingRod;
     private double x, y;
     private int npcIndex, objIndex, animalIndex;
+    public Fishing_Rod fishingRod;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
         super(gp);
         this.key = key;
         this.tileM = tileM;
         size = gp.tileSize + 10;
+
+        fishingRod = new Fishing_Rod(gp, this, key);
+        fishingRod.setLevel(rod);
 
         setDefaultValues();
 
@@ -151,6 +156,9 @@ public class Player extends Entity {
 
         //CHECK ANIMAL COLLISION
         animalIndex = gp.cChecker.checkEntity(this, gp.animal);
+
+        // UPDATE FISHING ROD
+        fishingRod.update();
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
@@ -293,7 +301,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = up2;
                 }
-//                fishingRod.reset();
+               fishingRod.reset();
                 break;
             case "down":
                 if (spriteNum == 1) {
@@ -302,7 +310,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = down2;
                 }
-//                fishingRod.reset();
+               fishingRod.reset();
                 break;
             case "left":
                 if (spriteNum == 1) {
@@ -311,7 +319,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = left2;
                 }
-//                fishingRod.reset();
+               fishingRod.reset();
                 break;
             case "right":
                 if (spriteNum == 1) {
@@ -320,7 +328,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = right2;
                 }
-//                fishingRod.reset();
+               fishingRod.reset();
                 break;
             case "standUp":
                 image = standUp;
@@ -356,15 +364,15 @@ public class Player extends Entity {
         if (bottomOffSet >= gp.worldHeight - worldY) {
             y = gp.screenHeight - (gp.worldHeight - worldY);
         }
-        g.drawImage(image, (int) x, (int) y, size, size, null);
+        // g.drawImage(image, (int) x, (int) y, size, size, null);
 
-//        ////////////////////////
-//        if(fishingRod.getFrame() != null){
-//            image = fishingRod.getFrame();
-//            g.drawImage(image, (int) (x - ( this.direction=="standLeft" ? (size) : 0)), (int) y, null);
-//        }
-//        else
-//            g.drawImage(image, (int) x, (int) y, size, size, null);
+       //
+       if(fishingRod.getFrame() != null){
+           image = fishingRod.getFrame();
+           g.drawImage(image, (int) (x - ( this.direction=="standLeft" ? (size) : 0)), (int) y, null);
+       }
+       else
+           g.drawImage(image, (int) x, (int) y, size, size, null);
 
     }
 }
