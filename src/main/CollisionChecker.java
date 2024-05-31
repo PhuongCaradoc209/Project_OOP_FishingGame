@@ -83,7 +83,7 @@ public class CollisionChecker {
             entityRightCol = (int) ((entityRightWorldX + entity.speed) / gp.tileSize);
             tileNum1 = gp.tileMgr.mapTileNum[gp.currentMap][entityTopRow][entityRightCol];
             tileNum2 = gp.tileMgr.mapTileNum[gp.currentMap][entityBottomRow][entityRightCol];
-            if (gp.tileMgr.tile[tileNum1].collision || gp.tileMgr.tile[tileNum2].collision) {
+            if (gp.tileMgr.tile[tileNum1].collision && gp.tileMgr.tile[tileNum2].collision) {
                 entity.collisionOn = !isDuck;
             }
         }

@@ -231,7 +231,7 @@ public class Player extends Entity {
                 case "Cow":
                     if (gp.keyHandler.enterPressed) {
                         // gp.gameState = gp.dialogueState;
-                        target.speak();
+//                        target.speak();
                     }
                     break;
             }
