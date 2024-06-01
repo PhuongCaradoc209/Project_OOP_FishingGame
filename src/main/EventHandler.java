@@ -37,8 +37,8 @@ public class EventHandler {
                     if (gp.player.physical >= level_Rod)
                     {
                         expendPhysical(level_Rod);
-//                        gp.ui.range_Y = gp.ui.random.nextInt(gp.ui.bar_Y + 7*gp.tileSize - gp.ui.heightOfRange - 20 - gp.ui.bar_Y - 10 + 1) + gp.ui.bar_Y + 15;
-//                        gp.ui.speedOfRange = -gp.ui.speedOfRange;
+                        gp.ui.range_Y = gp.ui.random.nextInt(gp.ui.bar_Y + 7*gp.tileSize - gp.ui.heightOfRange - 20 - gp.ui.bar_Y - 10 + 1) + gp.ui.bar_Y + 15;
+                        gp.ui.speedOfRange = -gp.ui.speedOfRange;
                         gp.gameState = gp.fishingState;
                     }
                     else
