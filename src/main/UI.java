@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.Random;
 
 public class UI {
     GamePanel gp;
@@ -27,12 +28,23 @@ public class UI {
     public int collectionSlotCol = 0,collectionSlotRow = 0;
     public int inventorySlotCol =0, inventorySlotRow = 0;
     BufferedImage image,fishImage,fishFrame;
-    final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
+    private final BufferedImage tittle, humanImg, dinoImg, humanUnselect, dinoUnselect, coin;
     public int commonFish = 0,uncommonFish = 0,rareFish = 0, legendaryFish = 0, total = 0;
     public String fishName = "", fishPrice = "", fishRarity = " ",desFishing  = " ",desCollections= " ";
     public Entity npc;
 
     private int counter = 0;
+
+    //FISHING GAMEPLAY
+    Random random = new Random();
+    private final BufferedImage bar_outside, bar_background, target;
+    int target_Y;
+    private int speedOfTarget;
+    int speedOfRange;
+    private final int bar_X;
+    final int bar_Y;
+    final int heightOfRange;
+    int range_Y;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -62,6 +74,17 @@ public class UI {
         physical_1 = physical.image3;
         physical_1_5 = physical.image4;
         physical_2 = physical.image5;
+
+        //SET UP FISHING GAMEPLAY
+        bar_outside = setup("background/bar_outside", 97, 555);
+        bar_background = setup("background/bar_bg", 90, 522);
+        target = setup("background/target", 73,73);
+        bar_X = gp.tileSize * 3;
+        bar_Y = gp.tileSize * 3;
+        target_Y = gp.tileSize * 5;
+        speedOfTarget = -13;
+        speedOfRange = 5;
+        heightOfRange = gp.tileSize;
 
         //FONT
         font = pixel.deriveFont(Font.BOLD, 60f);
@@ -104,6 +127,11 @@ public class UI {
             drawPlayerInformation();
             drawDialogueInteract();
         }
+        //NOTIFICATION STATE
+        else if (gp.gameState == gp.notificationState) {
+            drawPlayerInformation();
+            drawNotificationScreen();
+        }
         //COLLECTION STATE
         else if (gp.gameState == gp.collectionState) {
             drawCollectionScreen();
@@ -116,7 +144,7 @@ public class UI {
         //FISHING STATE
         else if (gp.gameState == gp.fishingState) {
             drawPlayerInformation();
-//            drawFishingScreen();
+            drawFishingScreen();
         }
         //TRADE STATE
         if (gp.gameState == gp.tradeState) {
@@ -342,6 +370,60 @@ public class UI {
         }
     }
 
+    public void drawNotificationScreen() {
+        int x = gp.tileSize * 5;
+        int y = gp.tileSize * 3;
+        int width = gp.screenWidth - (gp.tileSize * 10);
+        int height = gp.tileSize * 3;
+
+        drawSubWindow(x, y, width, height);
+        //TITLE
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+
+        //calculate the centerX for the text
+        FontMetrics fontMetrics = g2.getFontMetrics(g2.getFont());
+        int textWidth = fontMetrics.stringWidth(currentTittle);
+        int centerX = x + (width - textWidth) / 2;
+
+        y += gp.tileSize;
+
+        g2.drawString(currentTittle, centerX, y);
+
+        //TEXT
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+
+        fontMetrics = g2.getFontMetrics(g2.getFont());
+        textWidth = fontMetrics.stringWidth(currentNotification);
+        centerX = x + (width - textWidth) / 2;
+
+        y += gp.tileSize;
+
+        g2.drawString(currentNotification, centerX, y);
+    }
+
+    public void drawFishingScreen() {
+
+//        drawSubWindow1(bar_X, bar_Y, gp.tileSize, 7 * gp.tileSize, new Color(0xC7B7A3), new Color(0, 0, 0, 0), 15, 5);
+        g2.drawImage(bar_background, bar_X, bar_Y + 5,  gp.tileSize + gp.tileSize/3, 7 * gp.tileSize, null);
+
+        //FISHING RANGE
+        g2.setColor(new Color(0x4CC844));
+        if (range_Y <= bar_Y + 10) speedOfRange = -speedOfRange;
+        if (range_Y >= (bar_Y + 7 * gp.tileSize - heightOfRange - 10)) speedOfRange = -speedOfRange;
+        g2.fillRoundRect(bar_X + 20, range_Y, gp.tileSize/2 + 5, gp.tileSize, 30, 30);
+        range_Y += speedOfRange / 2;
+
+//        drawSubWindow1(bar_X, bar_Y, gp.tileSize, 7 * gp.tileSize, new Color(255, 255, 255, 0), new Color(0x543310), 10, 3);
+        g2.drawImage(bar_outside, bar_X, bar_Y,gp.tileSize + gp.tileSize/3, 7 * gp.tileSize, null);
+
+        //FISHING TARGET
+        target_Y += speedOfTarget;
+        if (target_Y <= bar_Y - 10) speedOfTarget = -speedOfTarget;
+        if (target_Y >= (bar_Y + 7 * gp.tileSize - 30)) speedOfTarget = -speedOfTarget;
+//        g2.fillRect(bar_X - gp.tileSize - gp.tileSize / 2, target_Y, gp.tileSize, gp.tileSize / 5);
+        g2.drawImage(target, bar_X - gp.tileSize, target_Y, gp.tileSize, gp.tileSize,null);
+    }
+
     public void drawCollectionScreen() {
         drawCollectionBackground();
         setFontAndColor(font, new Color(0x74342E));
@@ -352,7 +434,6 @@ public class UI {
         displayItemIsChosen();
         displayStatistic();
     }
-
 
     public void drawCollectionBackground() {
         int x = gp.tileSize ;
@@ -729,7 +810,6 @@ public class UI {
         }
     }
 
-
     public void drawTradeScreen() {
 
         switch (subState) {
@@ -1004,6 +1084,17 @@ public class UI {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = tailX - length;
         return x;
+    }
+    public void drawSubWindow(int x, int y, int width, int height) {
+        //BACKGROUND
+        Color c = new Color(0, 0, 0, 210); //OPACITY
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35, 35);
+
+        //BORDER
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(7));
+        g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
     public void drawSubWindow1(int x, int y, int width, int height, Color cbg, Color cs, int strokeSize, int arc) {
         g2.setColor(cbg);

@@ -48,10 +48,15 @@ public class KeyHandler implements KeyListener {
                 dialogState(key);
             }
 
-            // // FISHING STATE
-            // else if (gp.gameState == gp.fishingState) {
-            //     fishingState(key);
-            // }
+            //NOTIFICATION STATE
+            else if (gp.gameState == gp.notificationState) {
+                notificationState(key);
+            }
+
+            // FISHING STATE
+            else if (gp.gameState == gp.fishingState) {
+                fishingState(key);
+            }
 
             // AFTER FISHING STATE
             else if (gp.gameState == gp.afterFishingState) {
@@ -286,6 +291,25 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_SPACE) {
             gp.player.fishingRod.reset();
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void fishingState(int key) {
+        if (key == KeyEvent.VK_SPACE) {
+//            gp.ui.completion += 10;
+//            if (gp.ui.completion >= 100) {
+//                gp.ui.completion = 0;
+//                gp.inventoryMng.Fishing(gp.player.rod);
+//                gp.gameState = gp.afterFishingState;
+//            }w
+            if ((gp.ui.target_Y + gp.tileSize / 2) >= gp.ui.range_Y && (gp.ui.target_Y + gp.tileSize / 2) <= (gp.ui.range_Y + gp.ui.heightOfRange)) {
+//                gp.collectionM.Fishing(gp.player.currentFishingRod.rod);
+                gp.gameState = gp.afterFishingState;
+            } else {
+                gp.gameState = gp.notificationState;
+                gp.ui.currentTittle = "OOPS!";
+                gp.ui.currentNotification = "The fish got away! :((";
+            }
         }
     }
 
