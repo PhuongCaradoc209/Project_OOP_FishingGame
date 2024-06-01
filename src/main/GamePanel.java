@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound soundEffect = new Sound();
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
     Thread gameThread;
 
     //CHECK COLLISION
