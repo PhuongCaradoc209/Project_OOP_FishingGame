@@ -184,9 +184,9 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_SPACE) {
             spacePressed = true;
         }
-        if (key == KeyEvent.VK_F) {
-            fPressed = true;
-        }
+//        if (key == KeyEvent.VK_F) {
+//            fPressed = true;
+//        }
         if (key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.optionState;
             gp.music.stop("Bird");
@@ -288,7 +288,7 @@ public class KeyHandler implements KeyListener {
 
     // Fishing rod
     public void notificationState(int key) {
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE || key == KeyEvent.VK_ENTER) {
             gp.player.fishingRod.reset();
             gp.gameState = gp.playState;
         }
@@ -296,14 +296,9 @@ public class KeyHandler implements KeyListener {
 
     public void fishingState(int key) {
         if (key == KeyEvent.VK_SPACE) {
-//            gp.ui.completion += 10;
-//            if (gp.ui.completion >= 100) {
-//                gp.ui.completion = 0;
-//                gp.inventoryMng.Fishing(gp.player.rod);
-//                gp.gameState = gp.afterFishingState;
-//            }w
             if ((gp.ui.target_Y + gp.tileSize / 2) >= gp.ui.range_Y && (gp.ui.target_Y + gp.tileSize / 2) <= (gp.ui.range_Y + gp.ui.heightOfRange)) {
-//                gp.collectionM.Fishing(gp.player.currentFishingRod.rod);
+               // update current fishing rod
+                gp.collectionM.Fishing(1);
                 gp.gameState = gp.afterFishingState;
             } else {
                 gp.gameState = gp.notificationState;

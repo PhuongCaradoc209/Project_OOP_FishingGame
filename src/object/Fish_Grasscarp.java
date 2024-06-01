@@ -13,7 +13,7 @@ public class Fish_Grasscarp extends Entity {
         price = 2;
         fishStar = 1;
 
- //       getImage(gp);
+        getImage(gp);
         size = gp.tileSize * 2;
         speed = 1;
         
@@ -28,12 +28,12 @@ public class Fish_Grasscarp extends Entity {
     }
 
 
-//    public void getImage(GamePanel gp) {
-//        //Image for Collections
-//        collection_image = setup("Fish/Grasscarp_1",gp.tileSize*5/2,gp.tileSize*5/2);
-//        //Image for tradeState
-//        tradeState_image = setup("Fish/Grasscarp_1",gp.tileSize,gp.tileSize);
-//
+    public void getImage(GamePanel gp) {
+        //Image for Collections
+        collection_image = setup("Fish/Grasscarp_1",gp.tileSize*5/2,gp.tileSize*5/2);
+        //Image for tradeState
+        tradeState_image = setup("Fish/Grasscarp_1",gp.tileSize,gp.tileSize);
+
 //        //Image for FishTank
 //        diagonal_down_left1 = setup("Animal/Fish_Grasscarp_left", 100, 100);
 //        diagonal_down_left2 = setup("Animal/Fish_Grasscarp_left_2", 100, 100);
@@ -71,5 +71,5 @@ public class Fish_Grasscarp extends Entity {
 //            }
 //            actionLookCounter = 0;
 //        }
-//    }
+  }
 }

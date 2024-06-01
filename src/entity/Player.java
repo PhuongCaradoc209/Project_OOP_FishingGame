@@ -30,7 +30,7 @@ public class Player extends Entity {
         size = gp.tileSize + 10;
 
         fishingRod = new Fishing_Rod(gp, this, key);
-//        fishingRod.setLevel(currentFishingRod.rod);
+     // fishingRod.setLevel(currentFishingRod.rod);
         fishingRod.setLevel(1);
 
 
