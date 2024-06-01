@@ -13,7 +13,7 @@ public class Fish_Clownfish extends Entity {
         price = 7;
         fishStar = 1;
       
-      //  getImage(gp);
+        getImage(gp);
         size = gp.tileSize;
         speed = 1;
 
@@ -25,11 +25,11 @@ public class Fish_Clownfish extends Entity {
         desTrading = "A small, colorful fish found in tropical oceans,\nknown for its symbiotic relationship with\nsea anemones";
 
     }
-//    public void getImage(GamePanel gp) {
-//        //Image for Collections
-//        collection_image = setup("Fish/Clownfish_1",gp.tileSize*5/2,gp.tileSize*5/2);
-//        //Image for tradeState
-//        tradeState_image = setup("Fish/Clownfish_1",gp.tileSize,gp.tileSize);
+    public void getImage(GamePanel gp) {
+        //Image for Collections
+        collection_image = setup("Fish/Clownfish_1",gp.tileSize*5/2,gp.tileSize*5/2);
+        //Image for tradeState
+        tradeState_image = setup("Fish/Clownfish_1",gp.tileSize,gp.tileSize);
 //
 //        //Image for FishTank
 //        diagonal_down_left1 = setup("Animal/Fish_Clownfish_left", 100, 100);
@@ -68,5 +68,5 @@ public class Fish_Clownfish extends Entity {
 //            }
 //            actionLookCounter = 0;
 //        }
-//    }
+    }
 }

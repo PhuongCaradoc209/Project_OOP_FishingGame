@@ -13,7 +13,7 @@ public class Fish_Remora extends Entity {
         price = 5;
         fishStar = 2;
 
-    //    getImage(gp);
+        getImage(gp);
         size = gp.tileSize + gp.tileSize/2;
         speed = 2;
 
@@ -28,12 +28,12 @@ public class Fish_Remora extends Entity {
     }
 
 
-//    public void getImage(GamePanel gp) {
-//        //Image for Collections
-//        collection_image = setup("Fish/Remora_2",gp.tileSize*5/2,gp.tileSize*5/2);
-//        //Image for tradeState
-//        tradeState_image = setup("Fish/Remora_2",gp.tileSize,gp.tileSize);
-//
+    public void getImage(GamePanel gp) {
+        //Image for Collections
+        collection_image = setup("Fish/Remora_2",gp.tileSize*5/2,gp.tileSize*5/2);
+        //Image for tradeState
+        tradeState_image = setup("Fish/Remora_2",gp.tileSize,gp.tileSize);
+
 //        //Image for FishTank
 //        diagonal_down_left1 = setup("Animal/Fish_Remora_left", 100, 100);
 //        diagonal_down_left2 = setup("Animal/Fish_Remora_left_2", 100, 100);
@@ -71,5 +71,5 @@ public class Fish_Remora extends Entity {
 //            }
 //            actionLookCounter = 0;
 //        }
-//    }
+    }
 }

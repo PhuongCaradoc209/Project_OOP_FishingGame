@@ -14,7 +14,7 @@ public class Fish_Bigheadcarp extends Entity {
         price = 1;
         fishStar = 1;
 
-       // getImage(gp);
+        getImage(gp);
         size = gp.tileSize * 2;
         speed = 1;
 
@@ -26,11 +26,11 @@ public class Fish_Bigheadcarp extends Entity {
         desCollections = "A large, deep-bodied fish native to East\nAsia, known for their scaleless head\nand filter-feeding behavior";
     }
 
-//    public void getImage(GamePanel gp) {
-//        //Image for Collections
-//        collection_image = setup("Fish/Bigheadcarp_1", gp.tileSize * 5 / 2, gp.tileSize * 5 / 2);
-//        //Image for tradeState
-//        tradeState_image = setup("Fish/Bigheadcarp_1", gp.tileSize, gp.tileSize);
+    public void getImage(GamePanel gp) {
+        //Image for Collections
+        collection_image = setup("Fish/Bigheadcarp_1", gp.tileSize * 5 / 2, gp.tileSize * 5 / 2);
+        //Image for tradeState
+        tradeState_image = setup("Fish/Bigheadcarp_1", gp.tileSize, gp.tileSize);
 //
 //        //Image for FishTank
 //        diagonal_down_left1 = setup("Animal/Fish_Bigheadcarp_left", 100, 100);
@@ -69,5 +69,5 @@ public class Fish_Bigheadcarp extends Entity {
 //            }
 //            actionLookCounter = 0;
 //        }
-//    }
+    }
 }
