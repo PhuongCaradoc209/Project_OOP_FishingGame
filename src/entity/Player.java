@@ -30,7 +30,9 @@ public class Player extends Entity {
         size = gp.tileSize + 10;
 
         fishingRod = new Fishing_Rod(gp, this, key);
-        fishingRod.setLevel(rod);
+//        fishingRod.setLevel(currentFishingRod.rod);
+        fishingRod.setLevel(1);
+
 
         setDefaultValues();
 
@@ -38,8 +40,6 @@ public class Player extends Entity {
         screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
 
         interactEntity = new ArrayList<>();
-
-
 
         //AREA COLLISION
         solidArea = new Rectangle();
@@ -68,6 +68,8 @@ public class Player extends Entity {
         direction = "standDown";
 
         //PlayerStatus
+        maxPhysical = 16;
+        physical = maxPhysical;
 //        currentFishingRod = new OBJ_FishingRod1(gp);
     }
 
@@ -164,6 +166,10 @@ public class Player extends Entity {
 
         // UPDATE FISHING ROD
         fishingRod.update();
+
+        //CHECK EVENT
+//        gp.eHandler.checkEvent(currentFishingRod.rod);
+        gp.eHandler.checkEvent(1);
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);

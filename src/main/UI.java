@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import object.OBJ_PHYSICAL;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +15,11 @@ public class UI {
     Graphics2D g2;
     Font pixel;
     Font font, font1, font2, font3, font3a, font4, font4a, font5, font6, font7;
+
+    private final BufferedImage physical_0, physical_0_5, physical_1, physical_1_5, physical_2;
     public String currentDialogue = "";
+    public String currentNotification = "";
+    public String currentTittle = "";
     public int commandNum = 0;
     int subState = 0;
     public int playerSlotCol = 0,playerSlotRow = 0;
@@ -50,6 +55,14 @@ public class UI {
         dinoUnselect = setup("player/dino_Unselect", 1252, 1693);
         tittle = setup("background/tittle", gp.screenWidth, gp.screenHeight);
 
+        //CREATE PHYSICAL OBJECT
+        Entity physical = new OBJ_PHYSICAL(gp);
+        physical_0 = physical.image;
+        physical_0_5 = physical.image2;
+        physical_1 = physical.image3;
+        physical_1_5 = physical.image4;
+        physical_2 = physical.image5;
+
         //FONT
         font = pixel.deriveFont(Font.BOLD, 60f);
         font1 = pixel.deriveFont(Font.BOLD, 30f);
@@ -79,13 +92,16 @@ public class UI {
         }
         //PLAY STATE
         else if (gp.gameState == gp.playState) {
+            drawPlayerInformation();
         }
         //DIALOGUE STATE
         else if (gp.gameState == gp.dialogueState) {
+            drawPlayerInformation();
             drawDialogueScreen();
         }
         //AUTO DISPLAY STATE
         else if (gp.gameState == gp.autoDisplayState) {
+            drawPlayerInformation();
             drawDialogueInteract();
         }
         //COLLECTION STATE
@@ -94,9 +110,14 @@ public class UI {
         }
         //INVENTORY STATE
         else if (gp.gameState == gp.inventoryState) {
+            drawPlayerInformation();
             drawInventoryScreen();
         }
-
+        //FISHING STATE
+        else if (gp.gameState == gp.fishingState) {
+            drawPlayerInformation();
+//            drawFishingScreen();
+        }
         //TRADE STATE
         if (gp.gameState == gp.tradeState) {
             drawTradeScreen();
@@ -276,6 +297,49 @@ public class UI {
         //MAIN COLOR TEXT
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
+    }
+
+    public void drawPlayerInformation() {
+        drawPlayerPhysical();
+    }
+
+    public void drawPlayerPhysical() {
+        int x = gp.tileSize;
+        int y = gp.tileSize / 2;
+
+        //DRAW PHYSICAL FRAME
+        image = setup("background/PhysicalFrame", 423, 107);
+        g2.drawImage(image, gp.tileSize / 2, y - 5, gp.tileSize * 5, gp.tileSize + 10, null);
+
+        int i = 0;
+
+        //DRAW BLANK PHYSICAL
+        while (i < gp.player.maxPhysical) {
+            g2.drawImage(physical_0, x, y, null);
+            i += 4;
+            x += gp.tileSize;
+        }
+        //RESET
+        x = gp.tileSize;
+        y = gp.tileSize / 2;
+        i = 0;
+        while (i < gp.player.physical) {
+            g2.drawImage(physical_0_5, x, y, null);
+            i++;
+            if (i < gp.player.physical) {
+                g2.drawImage(physical_1, x, y, null);
+                i++;
+                if (i < gp.player.physical) {
+                    g2.drawImage(physical_1_5, x, y, null);
+                    i++;
+                    if (i < gp.player.physical) {
+                        g2.drawImage(physical_2, x, y, null);
+                    }
+                }
+            }
+            i++;
+            x += gp.tileSize;
+        }
     }
 
     public void drawCollectionScreen() {
