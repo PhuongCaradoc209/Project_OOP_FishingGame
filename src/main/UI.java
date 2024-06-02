@@ -180,6 +180,10 @@ public class UI {
         if (gp.gameState == gp.tradeState) {
             drawTradeScreen();
         }
+        //GAME OVER State
+        if(gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
+        }
 
     }
 
