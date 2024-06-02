@@ -4,6 +4,7 @@ import entity.Animal_Cow;
 import entity.Animal_Duck;
 import entity.NPC_OldMan;
 import object.*;
+import tile_interactive.IT_Door_close;
 
 public class AssetSetter {
     GamePanel gp;
@@ -189,5 +190,10 @@ public class AssetSetter {
             i++;
         }
     }
+    public void setInteractiveTile() {
+        mapNum = 0;
 
+        i = 0;
+        gp.iTile[mapNum].add(new IT_Door_close(gp,20,12));
+    }
 }

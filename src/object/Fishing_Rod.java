@@ -159,7 +159,7 @@ public class Fishing_Rod {
             return true;
         } else{
             // System.out.println("falseee");
-            System.out.println(currentTile);
+//            System.out.println(currentTile);
             // System.out.println(player.direction);
             return false;
         }

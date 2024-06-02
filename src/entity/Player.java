@@ -21,7 +21,7 @@ public class Player extends Entity {
     public ArrayList<Entity> interactEntity;
     public Entity currentFishingRod;
     private double x, y;
-    private int npcIndex, objIndex, animalIndex;
+    private int npcIndex, animalIndex, iTileIndex, objIndex;
     public Fishing_Rod fishingRod;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
@@ -163,6 +163,10 @@ public class Player extends Entity {
             messageOn(interactEntity.get(interactEntity_Index));
         }
 
+        //CHECK INTERACT TILE COLLISION
+        iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+        hitInteractiveTile(iTileIndex);
+
         //CHECK TILE COLLISION
         collisionOn = false;
         gp.cChecker.checkTile(this, false);
@@ -231,6 +235,21 @@ public class Player extends Entity {
             gp.playMusic("grass", 1);
         } else {
             gp.stopMusic("grass");
+        }
+    }
+
+    public void hitInteractiveTile(int i) {
+        if (i != 999 && !gp.iTile[0].get(i).isOpen) {
+            gp.playSoundEffect("Door open", 4);
+            gp.iTile[0].add(gp.iTile[0].get(i).getInteractedForm());
+            gp.iTile[0].remove(i);
+        }
+        if (i == 999) {
+            if (!gp.iTile[0].contains(gp.iTile[0].get(0).getInteractedForm()) && gp.iTile[0].get(0).name.equals("Door Open")) {
+                gp.playSoundEffect("Door close", 5);
+                gp.iTile[0].add(gp.iTile[0].get(0).getInteractedForm());
+                gp.iTile[0].remove(0);
+            }
         }
     }
 
