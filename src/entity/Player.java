@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import object.Fishing_Rod;
+import object.OBJ_FishingRod1;
 import tile.TileManager;
 
 import java.awt.*;
@@ -30,11 +31,11 @@ public class Player extends Entity {
         size = gp.tileSize + 10;
 
         fishingRod = new Fishing_Rod(gp, this, key);
-     // fishingRod.setLevel(currentFishingRod.rod);
+//        fishingRod.setLevel(currentFishingRod.rod);
         fishingRod.setLevel(1);
 
-
         setDefaultValues();
+        setItems();
 
         screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); //set the player at then center of the screen
         screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
@@ -70,8 +71,21 @@ public class Player extends Entity {
         //PlayerStatus
         maxPhysical = 16;
         physical = maxPhysical;
-//        currentFishingRod = new OBJ_FishingRod1(gp);
+        coin = 100;
+        currentFishingRod = new OBJ_FishingRod1(gp);
     }
+
+    public void setDefaultCharacterImage(){
+        //Use to change back to moving character image after fishing
+        fishingRod.reset();
+    }
+
+
+    public void setItems() {
+        inventory.clear();
+        inventory.add(currentFishingRod);
+    }
+
 
     public void getPlayerImage_DinoVer() {
         standUp = setup("player/dino_up_1", 16, 16);
