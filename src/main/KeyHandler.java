@@ -380,7 +380,7 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_SPACE) {
             if ((gp.ui.target_Y + gp.tileSize / 2) >= gp.ui.range_Y && (gp.ui.target_Y + gp.tileSize / 2) <= (gp.ui.range_Y + gp.ui.heightOfRange)) {
                // update current fishing rod
-                gp.collectionM.Fishing(1);
+                gp.collectionM.Fishing(gp.player.currentFishingRod.rod);
                 gp.gameState = gp.afterFishingState;
             } else {
                 gp.gameState = gp.notificationState;

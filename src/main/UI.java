@@ -359,6 +359,21 @@ public class UI {
 
     public void drawPlayerInformation() {
         drawPlayerPhysical();
+        drawPlayerCoin();
+        drawPlayerCurrentFishingRod();
+    }
+
+    public void drawPlayerCoin() {
+        image = setup("background/coin_bag", 136, 151);
+
+        g2.drawImage(image, 985, 90, gp.tileSize / 2 + gp.tileSize / 3, gp.tileSize / 2 + gp.tileSize / 3, null);
+
+        drawSubWindow1(1035, 95, gp.tileSize + gp.tileSize / 2, gp.tileSize - 20, new Color(0xf6d183), new Color(0x543a22), 3, 8);
+
+        //DRAW NUMBER OF COIN
+        String coin = String.format("%03d", gp.player.coin);
+        setFontAndColor(g2.getFont().deriveFont(Font.PLAIN, 30f), new Color(0xB76B21));
+        g2.drawString(coin, center(coin, 1035, gp.tileSize + gp.tileSize / 2), 125);
     }
 
     public void drawPlayerPhysical() {
@@ -398,6 +413,15 @@ public class UI {
             i++;
             x += gp.tileSize;
         }
+    }
+
+    public void drawPlayerCurrentFishingRod(){
+        //DRAW BACKGROUND
+        drawSubWindow1(gp.tileSize/2 + 5, gp.tileSize * 2 - 15, 2*gp.tileSize, gp.tileSize/2, new Color(0xefc096), new Color(0x9a512e), 3, 25);
+
+        String curentRod_text = String.format("Rod level: %s", gp.player.currentFishingRod.rod);
+        setFontAndColor(g2.getFont().deriveFont(Font.BOLD, 20f), new Color(0x7b342e));
+        g2.drawString(curentRod_text, gp.tileSize - 5, gp.tileSize * 2 + 7);
     }
 
     public void drawOptionScreen() {
