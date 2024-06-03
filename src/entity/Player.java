@@ -338,6 +338,9 @@ public class Player extends Entity {
             if (inventory.get(i).name.equals(itemName)) {
                 itemIndex = i;
                 break;
+            }else {
+                //Cannot find item wil return this index
+                itemIndex = 100;
             }
         }
         return itemIndex;

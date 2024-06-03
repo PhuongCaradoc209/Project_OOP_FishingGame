@@ -180,6 +180,10 @@ public class UI {
         if (gp.gameState == gp.tradeState) {
             drawTradeScreen();
         }
+        //GAME OVER State
+        if(gp.gameState == gp.gameOverState){
+            drawGameOverScreen();
+        }
 
     }
 
@@ -1305,32 +1309,38 @@ public class UI {
                     currentDialogue = "You need more coin to buy that!";
                     drawDialogueScreen();
                 } else {
-                    if (gp.player.canObtainItem(npc.inventory.get(itemIndex))) {
-                        gp.player.coin -= npc.inventory.get(itemIndex).price;
-                        npc.inventory.get(itemIndex).tradeCount ++;
-                        if(npc.inventory.get(itemIndex).name == "Fishing Rod 1" || npc.inventory.get(itemIndex).name == "Fishing Rod 2" || npc.inventory.get(itemIndex).name == "Fishing Rod 3"){
-
-                            //Change default fishingRod
-                            gp.player.currentFishingRod = npc.inventory.get(itemIndex);
-
-                            //remove item in npc inventory
-                            npc.inventory.remove(itemIndex);
-
-                            //remove item in player inventory
-                            if(gp.player.currentFishingRod.name == "Fishing Rod 2"){
-                                int previousItemIndex = gp.player.searchItemInInventory("Fishing Rod 1");
-                                gp.player.inventory.remove(previousItemIndex);
-                            }
-                            if(gp.player.currentFishingRod.name == "Fishing Rod 3"){
-                                int previousItemIndex = gp.player.searchItemInInventory("Fishing Rod 2");
-                                gp.player.inventory.remove(previousItemIndex);
-                            }
-                        }
-                    } else {
+                    if (gp.player.currentFishingRod.name == "Fishing Rod 1" && npc.inventory.get(itemIndex).name == "Fishing Rod 3") {
                         subState = 0;
                         gp.gameState = gp.dialogueState;
-                        currentDialogue = "You cannot carry any more!";
+                        currentDialogue = "You need to buy Fising Rod 2 first!";
+                    } else {
+                        if (gp.player.canObtainItem(npc.inventory.get(itemIndex))) {
+                            gp.player.coin -= npc.inventory.get(itemIndex).price;
+                            npc.inventory.get(itemIndex).tradeCount++;
+                            if (npc.inventory.get(itemIndex).name == "Fishing Rod 2" || npc.inventory.get(itemIndex).name == "Fishing Rod 3") {
 
+                                //Change default fishingRod
+                                gp.player.currentFishingRod = npc.inventory.get(itemIndex);
+
+                                //remove item in npc inventory
+                                npc.inventory.remove(itemIndex);
+
+                                //remove item in player inventory
+                                if (gp.player.currentFishingRod.name == "Fishing Rod 2") {
+                                    int previousItemIndex = gp.player.searchItemInInventory("Fishing Rod 1");
+                                    gp.player.inventory.remove(previousItemIndex);
+                                }
+                                if (gp.player.currentFishingRod.name == "Fishing Rod 3") {
+                                    int previousItemIndex = gp.player.searchItemInInventory("Fishing Rod 2");
+                                    gp.player.inventory.remove(previousItemIndex);
+                                }
+                            }
+                        } else {
+                            subState = 0;
+                            gp.gameState = gp.dialogueState;
+                            currentDialogue = "You cannot carry any more!";
+
+                        }
                     }
                 }
             }
