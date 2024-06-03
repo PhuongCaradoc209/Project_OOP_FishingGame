@@ -88,7 +88,12 @@ public class Animal_Cow extends Entity {
                 }
             }
         }
+    }
 
+    @Override
+    public void speak(){
+        super.speak();
+        gp.gameState = gp.feedCowState;
     }
 
     public void draw(Graphics2D g2) {
