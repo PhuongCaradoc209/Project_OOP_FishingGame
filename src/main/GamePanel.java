@@ -1,8 +1,10 @@
 package main;
 
+import Environment.EnvironmentManager;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +46,8 @@ public class GamePanel extends JPanel implements Runnable {
     Sound soundEffect = new Sound();
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public EventHandler eHandler = new EventHandler(this);
+    EnvironmentManager enviMgr = new EnvironmentManager(this);
     Thread gameThread;
 
     //CHECK COLLISION
@@ -57,7 +61,8 @@ public class GamePanel extends JPanel implements Runnable {
             npc = new ArrayList[maxMap];
     //ANIMAL
     public ArrayList<Entity>[] animal = new ArrayList[maxMap];
-    //Interactive Tile
+    //INTERACT TILE
+    public ArrayList<InteractiveTile>[] iTile = new ArrayList[maxMap];
     ArrayList<Entity> entityList = new ArrayList<>();
 
     //GAME STATE
@@ -77,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int transitionState = 12;
     public final int fishTankState = 13;
     public final int inventoryState = 14;
+    public final int gameOverState = 15;
 
     // FPS: Frame per second
     int FPS = 60;
@@ -96,16 +102,26 @@ public class GamePanel extends JPanel implements Runnable {
             obj[i] = new ArrayList<>();
             npc[i] = new ArrayList<>();
             animal[i] = new ArrayList<>();
+            iTile[i] = new ArrayList<>();
         }
         //SET ON MAP
-        aSetter.setAnimal(currentMap);
         aSetter.setObject();
         aSetter.setNPC();
+        aSetter.setAnimal(currentMap);
+        aSetter.setInteractiveTile();
+        enviMgr.setUp();
 
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
     }
+
+    public void restart(){
+        player.setDefaultValues();
+        player.setDefaultCharacterImage();
+        player.setItems();
+    }
+
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -167,6 +183,13 @@ public class GamePanel extends JPanel implements Runnable {
                     } else animal[0].get(i).update(false);
                 }
             }
+            for (int i = 0; i < iTile[0].size(); i++) {
+                if (iTile[0].get(i) != null) {
+                    iTile[0].get(i).update(false);
+                }
+            }
+            //ENVIRONMENT
+            enviMgr.update();
         }
     }
     public void drawToScreen() {
@@ -190,6 +213,12 @@ public class GamePanel extends JPanel implements Runnable {
             entityList.add(player);
 
             //INTERACTIVE TILE
+            for (InteractiveTile interactiveTile : iTile[currentMap]) {
+                if (interactiveTile != null) {
+                    entityList.add(interactiveTile);
+                }
+            }
+
             for (Entity entity : npc[currentMap]) {
                 if (entity != null) {
                     entityList.add(entity);
@@ -223,6 +252,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             //REMOVE ENTITIES TO THE LIST (otherwise, the list become larger after every loop)
             entityList.clear();
+
+            //ENVIRONMENT
+            enviMgr.draw(g2);
         }
 
         //UI

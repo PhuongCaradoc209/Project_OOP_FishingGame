@@ -13,7 +13,7 @@ public class Fish_Hammerhead extends Entity {
         price = 13;
         fishStar = 3;
 
-  //      getImage(gp);
+        getImage(gp);
         size = gp.tileSize * 4;
         speed = 0.5;
 
@@ -26,12 +26,12 @@ public class Fish_Hammerhead extends Entity {
     }
 
 
-//    public void getImage(GamePanel gp) {
-//        //Image for Collections
-//        collection_image = setup("Fish/Hammerhead_3",gp.tileSize*5/2,gp.tileSize*5/2);
-//        //Image for tradeState
-//        tradeState_image = setup("Fish/Hammerhead_3",gp.tileSize,gp.tileSize);
-//
+    public void getImage(GamePanel gp) {
+        //Image for Collections
+        collection_image = setup("Fish/Hammerhead_3",gp.tileSize*5/2,gp.tileSize*5/2);
+        //Image for tradeState
+        tradeState_image = setup("Fish/Hammerhead_3",gp.tileSize,gp.tileSize);
+
 //        //Image for FishTank
 //        diagonal_down_left1 = setup("Animal/Fish_Hammerhead_left", 100, 100);
 //        diagonal_down_left2 = setup("Animal/Fish_Hammerhead_left_2", 100, 100);
@@ -69,5 +69,5 @@ public class Fish_Hammerhead extends Entity {
 //            }
 //            actionLookCounter = 0;
 //        }
-//    }
+    }
 }

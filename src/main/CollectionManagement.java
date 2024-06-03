@@ -171,7 +171,7 @@ public class CollectionManagement {
                 break;
         }
         //Adding fish to inventory
-        //gp.player.canObtainItem(gp.collectionM.collection[num]);
+        gp.player.canObtainItem(gp.collectionM.collection[num]);
     }
     public void setImage(Entity e){
         if(e.caught == true){

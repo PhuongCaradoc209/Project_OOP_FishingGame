@@ -2,6 +2,9 @@ package entity;
 
 import main.GamePanel;
 import object.Fish_Koicarp;
+import object.OBJ_FishingRod2;
+import object.OBJ_FishingRod3;
+import object.OBJ_Grass;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -43,9 +46,9 @@ public class NPC_OldMan extends Entity {
     }
 
     public void setItem(){
-//        inventory.add(new OBJ_Grass(gp));
-//        inventory.add(new OBJ_FishingRod2(gp));
-//        inventory.add(new OBJ_FishingRod3(gp));
+        inventory.add(new OBJ_Grass(gp));
+        inventory.add(new OBJ_FishingRod2(gp));
+        inventory.add(new OBJ_FishingRod3(gp));
     }
 
     public void speak() {
