@@ -120,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.setDefaultValues();
         player.setDefaultCharacterImage();
         player.setItems();
+        ui.restartNPCInventory();
     }
 
 
