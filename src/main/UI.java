@@ -1,6 +1,8 @@
 package main;
 
 import entity.Entity;
+import object.OBJ_FishingRod2;
+import object.OBJ_FishingRod3;
 import object.OBJ_PHYSICAL;
 
 import javax.imageio.ImageIO;
@@ -1455,6 +1457,11 @@ public class UI {
         if(commandNum == 1){
             g2.drawString(">", x-40, y);
         }
+    }
+
+    public void restartNPCInventory(){
+        npc.inventory.add(new OBJ_FishingRod2(gp));
+        npc.inventory.add(new OBJ_FishingRod3(gp));
     }
 
     public int getXforCenteredText(String text) {
