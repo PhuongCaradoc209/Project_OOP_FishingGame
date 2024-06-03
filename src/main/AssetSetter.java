@@ -155,6 +155,8 @@ public class AssetSetter {
     public void setNPC() {
         mapNum = 0;
 
+        gp.npc[mapNum].clear();
+
         gp.npc[mapNum].add(new NPC_OldMan(gp));
         gp.npc[mapNum].get(0).worldX = gp.tileSize * 20;
         gp.npc[mapNum].get(0).worldY = gp.tileSize * 8;

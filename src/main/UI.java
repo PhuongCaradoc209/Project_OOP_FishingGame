@@ -3,6 +3,7 @@ package main;
 import entity.Entity;
 import object.OBJ_FishingRod2;
 import object.OBJ_FishingRod3;
+import object.OBJ_Grass;
 import object.OBJ_PHYSICAL;
 
 import javax.imageio.ImageIO;
@@ -670,7 +671,11 @@ public class UI {
             if (gp.keyHandler.enterPressed) {
                 subState = 0;
                 gp.gameState = gp.tittleState;
-                gp.restart();
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
             }
         }
 
@@ -958,6 +963,7 @@ public class UI {
             // Recharge player's energy
             if (gp.player.inventory.get(choose).name == "Milk" && gp.keyHandler.enterPressed == true) {
                 gp.keyHandler.enterPressed = false;
+                
                 if (gp.player.physical == gp.player.maxPhysical) {
                     currentDialogue = "You are full off energy!\nDon't need to drink milk :>";
                     gp.gameState = gp.feedCowYesState;
@@ -1556,10 +1562,18 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(50f));
         text = "Restart";
         x = getXforCenteredText(text);
-        y += gp.tileSize * 4;
-        g2.drawString(text, x, y);
-        if (commandNum == 0) {
-            g2.drawString(">", x - 40, y);
+        y += gp.tileSize*4;
+        g2.drawString(text,x,y);
+        if(commandNum == 0){
+            g2.drawString(">", x-40,y);
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.tittleState;
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
+            }
         }
 
         // Back to titleScreen
@@ -1567,16 +1581,27 @@ public class UI {
         x = getXforCenteredText(text);
         y += 55;
         g2.drawString(text, x, y);
-        if (commandNum == 1) {
-            g2.drawString(">", x - 40, y);
+        if(commandNum == 1){
+            g2.drawString(">", x-40, y);
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.tittleState;
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
+            }
         }
     }
 
-    public void restartNPCInventory() {
+
+    public void restartTheGame(){
+        gp.restart();
+        npc.inventory.clear();
+        npc.inventory.add(new OBJ_Grass(gp));
         npc.inventory.add(new OBJ_FishingRod2(gp));
         npc.inventory.add(new OBJ_FishingRod3(gp));
     }
-
     public int getXforCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth / 2 - length / 2;
