@@ -78,6 +78,11 @@ public class KeyHandler implements KeyListener {
                 inventoryState(key);
             }
 
+            // FEED COW STATE
+            else if (gp.gameState == gp.feedCowState) {
+                feedCowState(key);
+            }
+
             //TRADE STATE
             else if (gp.gameState == gp.tradeState) {
                 tradeState(key);
@@ -400,6 +405,28 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_ENTER) {
             gp.player.fishingRod.reset();
             gp.gameState = gp.playState;
+        }
+    }
+
+    public void feedCowState(int key) {
+        if (key == KeyEvent.VK_ESCAPE)
+            gp.gameState = gp.playState;
+        if (key == KeyEvent.VK_ENTER) {
+            enterPressed = true;
+        }
+        if (key == KeyEvent.VK_W) {
+            gp.ui.commandNum--;
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = 1;
+            }
+            gp.playSoundEffect("select_sound", 6);
+        }
+        if (key == KeyEvent.VK_S) {
+            gp.ui.commandNum++;
+            if (gp.ui.commandNum > 1) {
+                gp.ui.commandNum = 0;
+            }
+            gp.playSoundEffect("select_sound", 6);
         }
     }
 

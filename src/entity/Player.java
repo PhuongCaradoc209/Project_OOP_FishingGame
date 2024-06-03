@@ -267,8 +267,8 @@ public class Player extends Entity {
                     break;
                 case "Cow":
                     if (gp.keyHandler.enterPressed) {
-                        // gp.gameState = gp.dialogueState;
-//                        target.speak();
+                        gp.gameState = gp.dialogueState;
+                        target.speak();
                     }
                     break;
             }
