@@ -3,6 +3,8 @@ package main;
 import Environment.EnvironmentManager;
 import entity.Entity;
 import entity.Player;
+import object.OBJ_FishingRod2;
+import object.OBJ_FishingRod3;
 import tile.TileManager;
 import tile_interactive.InteractiveTile;
 
@@ -122,7 +124,9 @@ public class GamePanel extends JPanel implements Runnable {
         player.setDefaultValues();
         player.setDefaultCharacterImage();
         player.setItems();
-        ui.restartNPCInventory();
+        aSetter.setNPC();
+        aSetter.setAnimal(currentMap);
+        enviMgr.setUp();
     }
 
 

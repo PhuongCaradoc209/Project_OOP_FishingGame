@@ -452,6 +452,7 @@ public class KeyHandler implements KeyListener {
         if (key == KeyEvent.VK_ENTER) {
             enterPressed = true;
             gp.playSoundEffect("clickItem", 14);
+
         }
 
         if (gp.ui.subState == 0) {
@@ -555,14 +556,8 @@ public class KeyHandler implements KeyListener {
             gp.playSoundEffect("select_sound", 6);
         }
         if (key == KeyEvent.VK_ENTER) {
-            if (gp.ui.commandNum == 0) {
-                gp.gameState = gp.playState;
-                gp.restart();
-            } else if (gp.ui.commandNum == 1) {
-                gp.gameState = gp.tittleState;
-            }
+            enterPressed = true;
+            gp.playSoundEffect("click_sound", 7);
         }
-
     }
-
 }
