@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import object.Fishing_Rod;
+import object.OBJ_FishingRod1;
 import tile.TileManager;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class Player extends Entity {
     public ArrayList<Entity> interactEntity;
     public Entity currentFishingRod;
     private double x, y;
-    private int npcIndex, objIndex, animalIndex;
+    private int npcIndex, animalIndex, iTileIndex, objIndex;
     public Fishing_Rod fishingRod;
 
     public Player(GamePanel gp, KeyHandler key, TileManager tileM) {
@@ -29,12 +30,11 @@ public class Player extends Entity {
         this.tileM = tileM;
         size = gp.tileSize + 10;
 
-        fishingRod = new Fishing_Rod(gp, this, key);
-     // fishingRod.setLevel(currentFishingRod.rod);
-        fishingRod.setLevel(1);
-
-
         setDefaultValues();
+        setItems();
+
+        fishingRod = new Fishing_Rod(gp, this, key);
+        fishingRod.setLevel(currentFishingRod.rod);
 
         screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); //set the player at then center of the screen
         screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
@@ -70,8 +70,21 @@ public class Player extends Entity {
         //PlayerStatus
         maxPhysical = 16;
         physical = maxPhysical;
-//        currentFishingRod = new OBJ_FishingRod1(gp);
+        coin = 100;
+        currentFishingRod = new OBJ_FishingRod1(gp);
     }
+
+    public void setDefaultCharacterImage(){
+        //Use to change back to moving character image after fishing
+        fishingRod.reset();
+    }
+
+
+    public void setItems() {
+        inventory.clear();
+        inventory.add(currentFishingRod);
+    }
+
 
     public void getPlayerImage_DinoVer() {
         standUp = setup("player/dino_up_1", 16, 16);
@@ -150,6 +163,10 @@ public class Player extends Entity {
             messageOn(interactEntity.get(interactEntity_Index));
         }
 
+        //CHECK INTERACT TILE COLLISION
+        iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+        hitInteractiveTile(iTileIndex);
+
         //CHECK TILE COLLISION
         collisionOn = false;
         gp.cChecker.checkTile(this, false);
@@ -168,8 +185,7 @@ public class Player extends Entity {
         fishingRod.update();
 
         //CHECK EVENT
-//        gp.eHandler.checkEvent(currentFishingRod.rod);
-        gp.eHandler.checkEvent(1);
+        gp.eHandler.checkEvent(currentFishingRod.rod);
 
         //CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
@@ -219,6 +235,21 @@ public class Player extends Entity {
             gp.playMusic("grass", 1);
         } else {
             gp.stopMusic("grass");
+        }
+    }
+
+    public void hitInteractiveTile(int i) {
+        if (i != 999 && !gp.iTile[0].get(i).isOpen) {
+            gp.playSoundEffect("Door open", 4);
+            gp.iTile[0].add(gp.iTile[0].get(i).getInteractedForm());
+            gp.iTile[0].remove(i);
+        }
+        if (i == 999) {
+            if (!gp.iTile[0].contains(gp.iTile[0].get(0).getInteractedForm()) && gp.iTile[0].get(0).name.equals("Door Open")) {
+                gp.playSoundEffect("Door close", 5);
+                gp.iTile[0].add(gp.iTile[0].get(0).getInteractedForm());
+                gp.iTile[0].remove(0);
+            }
         }
     }
 
@@ -307,6 +338,9 @@ public class Player extends Entity {
             if (inventory.get(i).name.equals(itemName)) {
                 itemIndex = i;
                 break;
+            }else {
+                //Cannot find item wil return this index
+                itemIndex = 100;
             }
         }
         return itemIndex;

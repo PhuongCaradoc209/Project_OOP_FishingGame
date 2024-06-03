@@ -43,7 +43,13 @@ public class EventHandler {
                     }
                     else
                     {
+                        //Out Of Energy
                         outOfEnergy(gp.notificationState);
+
+                        //GameOver
+                        if(gp.player.coin < 5 || gp.player.searchItemInInventory( "Milk") == 100){
+                            gameOver(gp.gameOverState);
+                        }
                     }
                 }else{
                     fullOfInventory(gp.notificationState);
@@ -98,5 +104,8 @@ public class EventHandler {
         gp.gameState = game_State;
         gp.ui.currentTittle = "OOPS!";
         gp.ui.currentNotification = "You cannot carry any more!";
+    }
+    public void gameOver(int game_State){
+        gp.gameState = game_State;
     }
 }
