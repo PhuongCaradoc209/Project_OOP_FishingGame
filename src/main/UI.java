@@ -963,6 +963,7 @@ public class UI {
             // Recharge player's energy
             if (gp.player.inventory.get(choose).name == "Milk" && gp.keyHandler.enterPressed == true) {
                 gp.keyHandler.enterPressed = false;
+                
                 if (gp.player.physical == gp.player.maxPhysical) {
                     currentDialogue = "You are full off energy!\nDon't need to drink milk :>";
                     gp.gameState = gp.feedCowYesState;
