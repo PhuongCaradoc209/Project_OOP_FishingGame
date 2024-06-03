@@ -5,6 +5,7 @@ import main.GamePanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import object.OBJ_Milk;
 
 public class Animal_Cow extends Entity {
     private BufferedImage stand1, stand2, stand3, stand4, eat1, eat2, eat3, eat4, eat5;
@@ -13,6 +14,7 @@ public class Animal_Cow extends Entity {
         super(gp);
         name = "Cow";
         speed = 2;
+        setItem();
         getImage();
         direction = "stand";
         size = gp.tileSize * 2;
@@ -23,6 +25,11 @@ public class Animal_Cow extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         dialogues[0] = "Do you want to feed the cow?";
+        gp.ui.cow = this;
+    }
+
+    public void setItem(){
+        inventory.add(new OBJ_Milk(gp));
     }
 
     public void getImage() {
@@ -88,7 +95,12 @@ public class Animal_Cow extends Entity {
                 }
             }
         }
+    }
 
+    @Override
+    public void speak(){
+        super.speak();
+        gp.gameState = gp.feedCowState;
     }
 
     public void draw(Graphics2D g2) {
@@ -115,7 +127,11 @@ public class Animal_Cow extends Entity {
         if (bottomOffSet >= gp.worldHeight - gp.player.worldY) {
             screenY = gp.screenHeight - (gp.worldHeight - worldY);
         }
-        ////////////////////////
+
+        if(!direction.equals("stand") && !direction.equals("eat")) {
+            direction = "eat";
+        }
+        
         if (direction.equals("stand")) {
             if (spriteNum == 1) {
                 image = stand1;

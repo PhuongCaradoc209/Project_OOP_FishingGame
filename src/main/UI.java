@@ -1,6 +1,9 @@
 package main;
 
 import entity.Entity;
+import object.OBJ_FishingRod2;
+import object.OBJ_FishingRod3;
+import object.OBJ_Grass;
 import object.OBJ_PHYSICAL;
 
 import javax.imageio.ImageIO;
@@ -180,6 +183,19 @@ public class UI {
         if (gp.gameState == gp.tradeState) {
             drawTradeScreen();
         }
+
+        // FEED COW STATE
+        if(gp.gameState == gp.feedCowState){
+            drawPlayerInformation();
+            drawFeedCowScreen();
+        }
+
+        // FEED COW YES STATE
+        if(gp.gameState == gp.feedCowYesState) {
+            drawPlayerInformation();
+            drawFeedCowYesScreen();
+        }
+
         //GAME OVER State
         if(gp.gameState == gp.gameOverState){
             drawGameOverScreen();
@@ -653,7 +669,11 @@ public class UI {
             if (gp.keyHandler.enterPressed) {
                 subState = 0;
                 gp.gameState = gp.tittleState;
-                gp.restart();
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
             }
         }
 
@@ -1193,6 +1213,60 @@ public class UI {
         }
     }
 
+    public void drawFeedCowScreen(){
+        drawDialogueScreen();
+
+        //Draw options pane
+        int x = gp.tileSize * 15;
+        int y = gp.tileSize * 4;
+        int width = gp.tileSize * 3;
+        int height = (int) (gp.tileSize * 3);
+        drawSubWindow1(x, y, width, height,new Color(0xF4CE98), new Color(0x5e3622),10,30);
+    
+        //DrawText
+        x += gp.tileSize;
+        y += gp.tileSize;
+        g2.drawString("Yes", x, y);
+        if (commandNum == 0) {
+            g2.drawString(">", x - 24, y);
+            if (gp.keyHandler.enterPressed) {
+                // Check if grass available
+                int grassIndex = gp.player.searchItemInInventory("Grass");
+
+                if(grassIndex != 100){
+                    // delete a grass
+                    gp.player.inventory.get(grassIndex).tradeCount--;
+                    gp.player.inventory.remove(grassIndex);
+                    currentDialogue = "Cow gives you a bottle of pure cow's milk!";
+                    gp.player.canObtainItem(cow.inventory.get(0));
+                  //  int milkIndex = gp.player.searchItemInInventory("Milk");
+                    cow.inventory.get(0).tradeCount++;
+                    gp.gameState = gp.feedCowYesState;
+                }
+                else {
+                    currentDialogue = "No grass left :(( huhu\nBuy more :>";     
+                    gp.gameState = gp.feedCowYesState;               
+                }
+            }
+        }
+
+        y += gp.tileSize;
+        g2.drawString("No", x, y);
+        if (commandNum == 1) {
+            g2.drawString(">", x - 24, y);
+            if (gp.keyHandler.enterPressed) {
+                commandNum = 0;
+                gp.keyHandler.enterPressed = false;
+                gp.gameState = gp.playState;
+                
+            }
+        }
+    }
+
+    public void drawFeedCowYesScreen() {
+        drawDialogueScreen();     
+    }
+
     public void drawTradeScreen() {
 
         switch (subState) {
@@ -1445,6 +1519,14 @@ public class UI {
         g2.drawString(text,x,y);
         if(commandNum == 0){
             g2.drawString(">", x-40,y);
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.tittleState;
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
+            }
         }
 
         //Back to titleScreen
@@ -1454,9 +1536,25 @@ public class UI {
         g2.drawString(text, x, y);
         if(commandNum == 1){
             g2.drawString(">", x-40, y);
+            if (gp.keyHandler.enterPressed) {
+                gp.gameState = gp.tittleState;
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
+            }
         }
     }
 
+
+    public void restartTheGame(){
+        gp.restart();
+        npc.inventory.clear();
+        npc.inventory.add(new OBJ_Grass(gp));
+        npc.inventory.add(new OBJ_FishingRod2(gp));
+        npc.inventory.add(new OBJ_FishingRod3(gp));
+    }
     public int getXforCenteredText(String text) {
         int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return gp.screenWidth / 2 - length / 2;

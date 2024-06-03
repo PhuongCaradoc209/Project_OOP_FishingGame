@@ -64,7 +64,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gp.tileSize * 10;
         worldY = gp.tileSize * 7;
-        speed = (double) gp.worldWidth / 400;
+        speed = (double) gp.worldWidth / 250;
         direction = "standDown";
 
         //PlayerStatus
@@ -267,8 +267,8 @@ public class Player extends Entity {
                     break;
                 case "Cow":
                     if (gp.keyHandler.enterPressed) {
-                        // gp.gameState = gp.dialogueState;
-//                        target.speak();
+                        gp.gameState = gp.dialogueState;
+                        target.speak();
                     }
                     break;
             }
