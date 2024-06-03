@@ -1,5 +1,6 @@
 package main;
 
+import Environment.EnvironmentManager;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -46,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
+    EnvironmentManager enviMgr = new EnvironmentManager(this);
     Thread gameThread;
 
     //CHECK COLLISION
@@ -107,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setAnimal(currentMap);
         aSetter.setInteractiveTile();
-//        enviMgr.setUp();
+        enviMgr.setUp();
 
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -186,6 +188,8 @@ public class GamePanel extends JPanel implements Runnable {
                     iTile[0].get(i).update(false);
                 }
             }
+            //ENVIRONMENT
+            enviMgr.update();
         }
     }
     public void drawToScreen() {
@@ -248,6 +252,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             //REMOVE ENTITIES TO THE LIST (otherwise, the list become larger after every loop)
             entityList.clear();
+
+            //ENVIRONMENT
+            enviMgr.draw(g2);
         }
 
         //UI
