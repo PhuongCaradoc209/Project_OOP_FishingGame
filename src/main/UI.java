@@ -187,6 +187,12 @@ public class UI {
             drawFeedCowScreen();
         }
 
+        // FEED COW YES STATE
+        if(gp.gameState == gp.feedCowYesState) {
+            drawPlayerInformation();
+            drawFeedCowYesScreen();
+        }
+
         //GAME OVER State
         if(gp.gameState == gp.gameOverState){
             drawGameOverScreen();
@@ -1222,9 +1228,17 @@ public class UI {
 
                 if(grassIndex != 100){
                     // delete a grass
+                    gp.player.inventory.get(grassIndex).tradeCount--;
                     gp.player.inventory.remove(grassIndex);
+                    currentDialogue = "Cow gives you a bottle of pure cow's milk!";
+                    gp.player.canObtainItem(cow.inventory.get(0));
+                  //  int milkIndex = gp.player.searchItemInInventory("Milk");
+                    cow.inventory.get(0).tradeCount++;
+                    gp.gameState = gp.feedCowYesState;
                 }
                 else {
+                    currentDialogue = "No grass left :(( huhu\nBuy more :>";     
+                    gp.gameState = gp.feedCowYesState;               
                 }
             }
         }
@@ -1240,6 +1254,10 @@ public class UI {
                 
             }
         }
+    }
+
+    public void drawFeedCowYesScreen() {
+        drawDialogueScreen();     
     }
 
     public void drawTradeScreen() {
