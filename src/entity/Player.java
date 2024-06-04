@@ -36,12 +36,13 @@ public class Player extends Entity {
         fishingRod = new Fishing_Rod(gp, this, key);
         fishingRod.setLevel(currentFishingRod.rod);
 
-        screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); //set the player at then center of the screen
+        screenX = (double) gp.screenWidth / 2 - ((double) gp.tileSize / 2); // set the player at then center of the
+                                                                            // screen
         screenY = (double) gp.screenHeight / 2 - ((double) gp.tileSize / 2);
 
         interactEntity = new ArrayList<>();
 
-        //AREA COLLISION
+        // AREA COLLISION
         solidArea = new Rectangle();
         solidArea.x = (8 * gp.tileSize) / 48;
         solidArea.y = (16 * gp.tileSize) / 48;
@@ -55,7 +56,9 @@ public class Player extends Entity {
     }
 
     public void setPlayerImage(String playerType) {
+        Fishing_Rod.playerType = playerType;
         if (playerType.equals("Human")) {
+            
             getPlayerImage_HumanVer();
         } else
             getPlayerImage_DinoVer();
@@ -67,24 +70,22 @@ public class Player extends Entity {
         speed = (double) gp.worldWidth / 250;
         direction = "standDown";
 
-        //PlayerStatus
+        // PlayerStatus
         maxPhysical = 16;
         physical = maxPhysical;
         coin = 100;
         currentFishingRod = new OBJ_FishingRod1(gp);
     }
 
-    public void setDefaultCharacterImage(){
-        //Use to change back to moving character image after fishing
+    public void setDefaultCharacterImage() {
+        // Use to change back to moving character image after fishing
         fishingRod.reset();
     }
-
 
     public void setItems() {
         inventory.clear();
         inventory.add(currentFishingRod);
     }
-
 
     public void getPlayerImage_DinoVer() {
         standUp = setup("player/dino_up_1", 16, 16);
@@ -143,13 +144,13 @@ public class Player extends Entity {
             gp.stopMusic("grass");
         }
 
-        //UPDATE the solidArea due to zoom in and out
+        // UPDATE the solidArea due to zoom in and out
         solidArea.x = (10 * gp.tileSize) / 48;
         solidArea.y = (20 * gp.tileSize) / 48;
         solidArea.width = (30 * gp.tileSize) / 48;
         solidArea.height = (35 * gp.tileSize) / 48;
 
-        //CHECK AUTO DISPLAY
+        // CHECK AUTO DISPLAY
         if (!interactEntity.contains(gp.npc[0].get(0))) {
             interactEntity.add(gp.npc[0].get(0));
         }
@@ -163,34 +164,34 @@ public class Player extends Entity {
             messageOn(interactEntity.get(interactEntity_Index));
         }
 
-        //CHECK INTERACT TILE COLLISION
+        // CHECK INTERACT TILE COLLISION
         iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
         hitInteractiveTile(iTileIndex);
 
-        //CHECK TILE COLLISION
+        // CHECK TILE COLLISION
         collisionOn = false;
         gp.cChecker.checkTile(this, false);
 
-        //CHECK OBJ COLLISION
+        // CHECK OBJ COLLISION
         objIndex = gp.cChecker.checkObj(this, true);
 
-        //CHECK NPC COLLISION
+        // CHECK NPC COLLISION
         npcIndex = gp.cChecker.checkEntity(this, gp.npc);
         interactNPC(npcIndex);
 
-        //CHECK ANIMAL COLLISION
+        // CHECK ANIMAL COLLISION
         animalIndex = gp.cChecker.checkEntity(this, gp.animal);
 
         // UPDATE FISHING ROD
         fishingRod.update();
 
-        //CHECK EVENT
+        // CHECK EVENT
         gp.eHandler.checkEvent(currentFishingRod.rod);
 
-        //CHECK IF AT EDGE
+        // CHECK IF AT EDGE
         gp.cChecker.checkAtEdge(this);
 
-        //IF COLLISION IS FALSE, PLAYER CAN MOVE
+        // IF COLLISION IS FALSE, PLAYER CAN MOVE
         if (!collisionOn) {
             switch (direction) {
                 case "up":
@@ -226,7 +227,7 @@ public class Player extends Entity {
     }
 
     private void setTileSound(TileManager tileM) {
-        //getPLayerCol and Row at the center point of player
+        // getPLayerCol and Row at the center point of player
         int playerCol = (int) ((worldX + gp.tileSize / 2) / gp.tileSize);
         int playerRow = (int) ((worldY + gp.tileSize / 2) / gp.tileSize);
         int tileIndex = tileM.mapTileNum[gp.currentMap][playerRow][playerCol];
@@ -245,7 +246,8 @@ public class Player extends Entity {
             gp.iTile[0].remove(i);
         }
         if (i == 999) {
-            if (!gp.iTile[0].contains(gp.iTile[0].get(0).getInteractedForm()) && gp.iTile[0].get(0).name.equals("Door Open")) {
+            if (!gp.iTile[0].contains(gp.iTile[0].get(0).getInteractedForm())
+                    && gp.iTile[0].get(0).name.equals("Door Open")) {
                 gp.playSoundEffect("Door close", 5);
                 gp.iTile[0].add(gp.iTile[0].get(0).getInteractedForm());
                 gp.iTile[0].remove(0);
@@ -307,7 +309,7 @@ public class Player extends Entity {
     public boolean canObtainItem(Entity item) {
         boolean canContain = false;
 
-        //Check if stackable
+        // Check if stackable
         if (item.stackable == true) {
             int index = searchItemInInventory(item.name);
 
@@ -315,14 +317,14 @@ public class Player extends Entity {
                 inventory.get(index).amount++;
                 canContain = true;
             } else {
-                //New item so need to track vacancy
+                // New item so need to track vacancy
                 if (inventory.size() != maxInventorySize) {
                     inventory.add(item);
                     canContain = true;
                 }
             }
         } else {
-            //Not stackable so check vacancy
+            // Not stackable so check vacancy
             if (inventory.size() != maxInventorySize) {
                 inventory.add(item);
                 canContain = true;
@@ -338,18 +340,17 @@ public class Player extends Entity {
             if (inventory.get(i).name.equals(itemName)) {
                 itemIndex = i;
                 break;
-            }else {
-                //Cannot find item wil return this index
+            } else {
+                // Cannot find item wil return this index
                 itemIndex = 100;
             }
         }
         return itemIndex;
     }
 
-
     public void draw(Graphics2D g) {
-//        g.setColor(Color.white);
-//        g.fillRect(x, y, gp.tileSize, gp.tileSize);
+        // g.setColor(Color.white);
+        // g.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
         switch (direction) {
             case "up":
@@ -359,7 +360,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = up2;
                 }
-               fishingRod.reset();
+                fishingRod.reset();
                 break;
             case "down":
                 if (spriteNum == 1) {
@@ -368,7 +369,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = down2;
                 }
-               fishingRod.reset();
+                fishingRod.reset();
                 break;
             case "left":
                 if (spriteNum == 1) {
@@ -377,7 +378,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = left2;
                 }
-               fishingRod.reset();
+                fishingRod.reset();
                 break;
             case "right":
                 if (spriteNum == 1) {
@@ -386,7 +387,7 @@ public class Player extends Entity {
                 if (spriteNum == 2) {
                     image = right2;
                 }
-               fishingRod.reset();
+                fishingRod.reset();
                 break;
             case "standUp":
                 image = standUp;
@@ -401,36 +402,41 @@ public class Player extends Entity {
                 image = standLeft;
                 break;
         }
-        //STOP MOVING THE CAMERA AT EDGE (PLAYER CAN NOT MOVE IF AT EDGE)
+        // STOP MOVING THE CAMERA AT EDGE (PLAYER CAN NOT MOVE IF AT EDGE)
         x = screenX;
         y = screenY;
-        //TOP
+        // TOP
         if (gp.player.screenX >= worldX) {
             x = worldX;
         }
-        //LEFT
+        // LEFT
         if (gp.player.screenY >= worldY) {
             y = worldY;
         }
-        //RIGHT
+        // RIGHT
         double rightOffSet = gp.screenWidth - screenX;
         if (rightOffSet >= gp.worldWidth - worldX) {
             x = gp.screenWidth - (gp.worldWidth - worldX);
         }
-        //BOTTOM
+        // BOTTOM
         double bottomOffSet = gp.screenHeight - screenY;
         if (bottomOffSet >= gp.worldHeight - worldY) {
             y = gp.screenHeight - (gp.worldHeight - worldY);
         }
         // g.drawImage(image, (int) x, (int) y, size, size, null);
 
-       //
-       if(fishingRod.getFrame() != null){
-           image = fishingRod.getFrame();
-           g.drawImage(image, (int) (x - ( this.direction=="standLeft" ? (size) : 0)), (int) y, null);
-       }
-       else
-           g.drawImage(image, (int) x, (int) y, size, size, null);
+        //
+        if (fishingRod.getFrame() != null) {
+            if (Fishing_Rod.playerType == "Human") {
+                image = fishingRod.getFrame();
+                g.drawImage(image, (int) (x - (this.direction == "standLeft" ? (size) : 0)), (int) y, null);
+            } else {
+                image = fishingRod.getFrame();
+                g.drawImage(image, (int) (x - (this.direction == "standLeft" ? (size * 2) : 0)), (int) y, null);
+            }
+        } else {
+            g.drawImage(image, (int) x, (int) y, size, size, null);
+        }
 
     }
 }
