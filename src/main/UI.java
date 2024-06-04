@@ -959,21 +959,6 @@ public class UI {
             g2.drawString("Price: " + gp.player.inventory.get(choose).price, x, y);
             y += 30;
             g2.drawString("Current quantity: " + gp.player.inventory.get(choose).tradeCount, x, y);
-
-            // Recharge player's energy
-            if (gp.player.inventory.get(choose).name == "Milk" && gp.keyHandler.enterPressed == true) {
-                gp.keyHandler.enterPressed = false;
-                
-                if (gp.player.physical == gp.player.maxPhysical) {
-                    currentDialogue = "You are full off energy!\nDon't need to drink milk :>";
-                    gp.gameState = gp.feedCowYesState;
-                } else {
-                    gp.player.inventory.get(choose).tradeCount--;
-                    gp.player.inventory.remove(choose);
-
-                    gp.eHandler.addPhysical(8);
-                }
-            }
         }
     }
 
@@ -1263,18 +1248,24 @@ public class UI {
     }
 
     public void drawFeedCowScreen() {
-        drawDialogueScreen();
+        //Draw background
+        int x = gp.tileSize * 6;
+        int y = gp.tileSize * 2;
+        int width = gp.screenWidth - (gp.tileSize * 12);
+        int height = gp.tileSize * 4;
+        drawSubWindow1(x, y, width, height, new Color(0xF4CE98), new Color(0x5e3622), 5, 30);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
 
-        // Draw options pane
-        int x = gp.tileSize * 15;
-        int y = gp.tileSize * 4;
-        int width = gp.tileSize * 3;
-        int height = (int) (gp.tileSize * 3);
-        drawSubWindow1(x, y, width, height, new Color(0xF4CE98), new Color(0x5e3622), 10, 30);
-
-        // DrawText
         x += gp.tileSize;
         y += gp.tileSize;
+
+        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(line, x, y);
+            y += 40;
+        }
+
+        //DrawText
+        y += 30;
         g2.drawString("Yes", x, y);
         if (commandNum == 0) {
             g2.drawString(">", x - 24, y);
@@ -1286,7 +1277,7 @@ public class UI {
                     // delete a grass
                     gp.player.inventory.get(grassIndex).tradeCount--;
                     gp.player.inventory.remove(grassIndex);
-                    currentDialogue = "Cow gives you a bottle of pure cow's milk!";
+                    currentDialogue = "Cow gives you a bottle of pure\ncow's milk!";
                     gp.player.canObtainItem(cow.inventory.get(0));
                     // int milkIndex = gp.player.searchItemInInventory("Milk");
                     cow.inventory.get(0).tradeCount++;
@@ -1309,10 +1300,42 @@ public class UI {
 
             }
         }
+
+        //Draw image
+        if (commandNum == 0) {
+            g2.setColor(new Color(0, 0, 0, 50));
+            g2.fillOval(35 + gp.tileSize * 10, 10+ gp.tileSize * 5, -20 + gp.tileSize * 9 / 4, 20);
+            image = setup("Animal/cowhappy", gp.tileSize * 3, gp.tileSize * 3);
+            g2.drawImage(image, gp.tileSize * 10, -10 + gp.tileSize * 3, gp.tileSize * 3, gp.tileSize * 3, null);
+        }
+        else {
+            g2.setColor(new Color(0, 0, 0, 50));
+            g2.fillOval(35 + gp.tileSize * 10,  10+gp.tileSize * 5, -20 + gp.tileSize * 9 / 4, 20);
+            image = setup("Animal/cowsad", gp.tileSize * 3, gp.tileSize * 3);
+            g2.drawImage(image, gp.tileSize * 10, -10 + gp.tileSize * 3, gp.tileSize * 3, gp.tileSize * 3, null);
+        }
     }
 
     public void drawFeedCowYesScreen() {
-        drawDialogueScreen();
+        //Draw background
+        int x = gp.tileSize * 6;
+        int y = gp.tileSize * 2;
+        int width = gp.screenWidth - (gp.tileSize * 12);
+        int height = gp.tileSize * 4;
+        drawSubWindow1(x, y, width, height, new Color(0xF4CE98), new Color(0x5e3622), 5, 30);
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
+        x += gp.tileSize;
+        y += gp.tileSize;
+
+        for (String line : currentDialogue.split("\n")) {
+            g2.drawString(line, x, y);
+            y += 40;
+        }
+        //Draw image
+        if (currentDialogue.equals("Cow gives you a bottle of pure\ncow's milk!") ) {
+            image = setup("Item/Milk", gp.tileSize * 3 / 2, gp.tileSize * 3 / 2);
+            g2.drawImage(image, gp.tileSize * 37 / 4, gp.tileSize * 4, gp.tileSize * 3 / 2, gp.tileSize * 3 / 2, null);
+        }
     }
 
     public void drawTradeScreen() {
