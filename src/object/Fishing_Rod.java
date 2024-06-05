@@ -280,6 +280,8 @@ public class Fishing_Rod {
     }
 
     public void update() {
+        level = player.currentFishingRod.rod;
+        
         if (!playerType.equals("") && addedImage == false) {
             if (playerType.equals("Human")) {
                 humanGoFishing();
