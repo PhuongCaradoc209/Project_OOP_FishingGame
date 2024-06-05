@@ -323,4 +323,16 @@ public class GamePanel extends JPanel implements Runnable {
         soundEffect.setField(i);
         soundEffect.playSE(soundName);
     }
+    public void playSpecifiedSoundEffect(String soundName, int i) {
+        if (!soundEffect.isPlaying(soundName)){
+            soundEffect.setField(i);
+            soundEffect.playSpecifiedSE(soundName);
+        }
+    }
+
+    public void stopSpecifiedSoundEffect(String soundName){
+        soundEffect.stop(soundName);
+    }
+
+
 }

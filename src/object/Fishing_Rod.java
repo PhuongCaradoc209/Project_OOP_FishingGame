@@ -298,11 +298,11 @@ public class Fishing_Rod {
         if (!playerType.equals("")) {
             if (playerType.equals("Human")) {
                 if (isFishing) {
-                    // gp.playMusic("Fishing_Rod", 15);
+                     gp.playMusic("Fishing_Rod", 15);
                     if (castFrame >= 11) {
-                        // reset();
-                        // gp.stopMusic("Fishing_Rod");
-                        // gp.playSoundEffect("spash", 16);
+                         reset();
+                         gp.stopMusic("Fishing_Rod");
+                         gp.playSoundEffect("spash", 16);
                         key.AnnouceCompleteAnimation = true;
                         return;
                     }
@@ -322,10 +322,10 @@ public class Fishing_Rod {
                 }
             } else {
                 if (isFishing) {
-                    // gp.playMusic("Fishing_Rod", 15);
+                     gp.playMusic("Fishing_Rod", 15);
                     if (castFrame >= 11) {
-                        // gp.stopMusic("Fishing_Rod");
-                        // gp.playSoundEffect("spash", 16);
+                         gp.stopMusic("Fishing_Rod");
+                         gp.playSoundEffect("spash", 16);
                         key.AnnouceCompleteAnimation = true;
                         return;
                     }
