@@ -24,7 +24,7 @@ public class Fishing_Rod {
     private int level = 1;
     public static String playerType = "";
     private boolean isFishing = false;
-    private boolean addedImage = false;
+    private String loadedImage = "";
 
     // animation
     public BufferedImage[][] cast = new BufferedImage[3][12];
@@ -283,13 +283,14 @@ public class Fishing_Rod {
     public void update() {
         level = player.currentFishingRod.rod;
 
-        if (!playerType.equals("") && addedImage == false) {
+        if (!playerType.equals(loadedImage)) {
             if (playerType.equals("Human")) {
                 humanGoFishing();
+                loadedImage = playerType;
             } else {
                 dinoGoFishing();
+                loadedImage = playerType;
             }
-            addedImage = true;
         }
 
         if (isFacingWater() == true && key.spacePressed == true) {
