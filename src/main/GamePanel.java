@@ -125,7 +125,6 @@ public class GamePanel extends JPanel implements Runnable {
         player.setDefaultCharacterImage();
         player.setItems();
         aSetter.setNPC();
-        aSetter.setAnimal(currentMap);
         enviMgr.setUp();
     }
 
