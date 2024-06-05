@@ -229,7 +229,7 @@ public class Fishing_Rod {
     }
 
     public boolean isFacingWater() {
-        if (player.direction != "standRight" && player.direction != "standLeft") 
+        if (player.direction != "standRight" && player.direction != "standLeft")
             return false;
         double yMap = player.worldX / gp.tileSize;
         double xMap = player.worldY / gp.tileSize;
@@ -281,7 +281,7 @@ public class Fishing_Rod {
 
     public void update() {
         level = player.currentFishingRod.rod;
-        
+
         if (!playerType.equals("") && addedImage == false) {
             if (playerType.equals("Human")) {
                 humanGoFishing();
@@ -298,11 +298,11 @@ public class Fishing_Rod {
         if (!playerType.equals("")) {
             if (playerType.equals("Human")) {
                 if (isFishing) {
-                     gp.playMusic("Fishing_Rod", 15);
+                    gp.playMusic("Fishing_Rod", 15);
                     if (castFrame >= 11) {
-                         reset();
-                         gp.stopMusic("Fishing_Rod");
-                         gp.playSoundEffect("spash", 16);
+                        reset();
+                        gp.stopMusic("Fishing_Rod");
+                        gp.playSoundEffect("spash", 16);
                         key.AnnouceCompleteAnimation = true;
                         return;
                     }
@@ -322,10 +322,10 @@ public class Fishing_Rod {
                 }
             } else {
                 if (isFishing) {
-                     gp.playMusic("Fishing_Rod", 15);
+                    gp.playMusic("Fishing_Rod", 15);
                     if (castFrame >= 11) {
-                         gp.stopMusic("Fishing_Rod");
-                         gp.playSoundEffect("spash", 16);
+                        gp.stopMusic("Fishing_Rod");
+                        gp.playSoundEffect("spash", 16);
                         key.AnnouceCompleteAnimation = true;
                         return;
                     }
@@ -356,7 +356,7 @@ public class Fishing_Rod {
                     // make rod[rodFrame] next to cast[castFrame]
                     BufferedImage combined = new BufferedImage(size * 2, size, BufferedImage.TYPE_INT_ARGB);
                     Graphics2D g = combined.createGraphics();
-                    
+
                     if (castFrame == 1 || castFrame == 2) {
                         g.drawImage(cast[level - 1][castFrame], size + marginRight, 0, size, size, null);
                     } else {
