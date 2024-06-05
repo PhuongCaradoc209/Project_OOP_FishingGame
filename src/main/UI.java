@@ -196,6 +196,11 @@ public class UI {
             drawFeedCowYesScreen();
         }
 
+        // TRANSITION STATE
+        if (gp.gameState == gp.transitionState) {
+            drawTransition();
+        }
+
         // GAME OVER State
         if (gp.gameState == gp.gameOverState) {
             drawGameOverScreen();
@@ -376,6 +381,30 @@ public class UI {
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
     }
+
+    public void drawTransition() {
+        counter++;
+        g2.setColor(new Color(0, 0, 0, counter * 5));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        if (counter == 50) {
+            counter = 0;
+            if (gp.keyHandler.temp_map == 0) {
+                gp.gameState = gp.playState;
+            } else {
+                gp.gameState = gp.fishTankState;
+            }
+            gp.currentMap = gp.keyHandler.temp_map;
+
+            gp.player.worldX = gp.keyHandler.temp_woldX;
+            gp.player.worldY = gp.keyHandler.temp_woldY;
+
+            if (gp.keyHandler.temp_map == 1) {
+                gp.playSoundEffect("start_FishTank", 9);
+                gp.aSetter.setAnimal(gp.currentMap);
+            }
+        }
+    }
+
 
     public void drawPlayerInformation() {
         drawPlayerPhysical();

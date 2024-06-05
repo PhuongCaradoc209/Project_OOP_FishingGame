@@ -17,6 +17,8 @@ public class Player extends Entity {
 
     public double screenX;
     public double screenY;
+    public double temp_worldX;
+    public double temp_worldY;
     public int interactEntity_Index;
     public ArrayList<Entity> interactEntity;
     public Entity currentFishingRod;

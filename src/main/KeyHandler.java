@@ -98,6 +98,9 @@ public class KeyHandler implements KeyListener {
                 gameOverState(key);
 
             }
+        }else if (gp.currentMap == 1) {
+            gameFishTankState(key);
+
         }
     }
 
@@ -229,14 +232,26 @@ public class KeyHandler implements KeyListener {
             temp_map = 1;
             temp_woldX = 0;
             temp_woldY = 0;
-            //
-            // gp.player.temp_worldX = gp.player.worldX;
-            // gp.player.temp_worldY = gp.player.worldY;
+
+            gp.player.temp_worldX = gp.player.worldX;
+            gp.player.temp_worldY = gp.player.worldY;
         }
 
         // DEBUG
         if (key == KeyEvent.VK_T) {
             checkDrawTime = (checkDrawTime == true) ? false : true;
+        }
+    }
+
+    public void gameFishTankState(int key) {
+        if (key == KeyEvent.VK_ESCAPE) {
+            gp.animal[1].clear();
+
+            temp_woldX = gp.player.temp_worldX;
+            temp_woldY = gp.player.temp_worldY;
+
+            gp.gameState = gp.transitionState;
+            temp_map = 0;
         }
     }
 
