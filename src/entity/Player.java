@@ -259,6 +259,7 @@ public class Player extends Entity {
         if (gp.gameState == gp.autoDisplayState) {
             switch (target.name) {
                 case "old man":
+                    gp.playSpecifiedSoundEffect("dialogAuto", 17);
                     if (gp.keyHandler.enterPressed) {
                         gp.gameState = gp.dialogueState;
                         target.speak();
@@ -268,6 +269,7 @@ public class Player extends Entity {
                     }
                     break;
                 case "Cow":
+                    gp.playSpecifiedSoundEffect("cow_umbo", 8);
                     if (gp.keyHandler.enterPressed) {
                         gp.gameState = gp.dialogueState;
                         target.speak();
@@ -303,6 +305,8 @@ public class Player extends Entity {
                 gp.gameState = gp.playState;
             }
         }
+        gp.stopSpecifiedSoundEffect("dialogAuto");
+        gp.stopSpecifiedSoundEffect("cow_umbo");
         return 999;
     }
 
