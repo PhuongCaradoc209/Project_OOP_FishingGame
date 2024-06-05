@@ -251,6 +251,14 @@ public class UI {
             g2.drawString(text, x, y);
             g2.drawString(">", x - gp.tileSize, y);
             g2.setColor(Color.white);
+            if(gp.keyHandler.enterPressed == true){
+                gp.gameState = gp.selectPlayerState;
+                try{
+                    restartTheGame();
+                }catch (Exception e){
+
+                }
+            }
         }
 
         text = "LOAD GAME";
@@ -274,6 +282,9 @@ public class UI {
             g2.drawString(text, x, y);
             g2.drawString(">", x - gp.tileSize, y);
             g2.setColor(Color.white);
+            if(gp.keyHandler.enterPressed == true){
+                gp.gameState = gp.playState;
+            }
         }
 
         text = "QUIT";
@@ -297,7 +308,12 @@ public class UI {
             g2.drawString(text, x, y);
             g2.drawString(">", x - gp.tileSize, y);
             g2.setColor(Color.white);
+            if(gp.keyHandler.enterPressed == true){
+                System.exit(0);
+            }
         }
+        //Reset enterPressed
+        gp.keyHandler.enterPressed = false;
     }
 
     public void drawSelectPlayerScreen() {
@@ -330,6 +346,11 @@ public class UI {
             g2.drawImage(image, gp.tileSize * 3 - 50, gp.tileSize * 3, 1244 / 4, 1707 / 4, null);
             g2.setColor(Color.black);
             g2.drawString(text, x, y - 7);
+
+            if(gp.keyHandler.enterPressed == true){
+                gp.player.setPlayerImage("Human");
+                gp.gameState = gp.playState;
+            }
         }
 
         // DINO
@@ -364,6 +385,11 @@ public class UI {
             text = "HUMAN";
             g2.setColor(Color.black);
             g2.drawString(text, x, y - 7);
+
+            if(gp.keyHandler.enterPressed == true){
+                gp.player.setPlayerImage("Dino");
+                gp.gameState = gp.playState;
+            }
         }
 
         // TITTLE NAME
@@ -380,6 +406,9 @@ public class UI {
         // MAIN COLOR TEXT
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
+
+        //Reset enterPressed
+        gp.keyHandler.enterPressed = false;
     }
 
     public void drawTransition() {
@@ -700,11 +729,6 @@ public class UI {
             if (gp.keyHandler.enterPressed) {
                 subState = 0;
                 gp.gameState = gp.tittleState;
-                try{
-                    restartTheGame();
-                }catch (Exception e){
-
-                }
             }
         }
 
