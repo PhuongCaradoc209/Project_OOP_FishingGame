@@ -375,7 +375,19 @@ public class KeyHandler implements KeyListener {
 
         }
         if (key == KeyEvent.VK_ENTER) {
-            enterPressed = true;
+            // Recharge player's energy
+            int choose = gp.ui.inventorySlotCol + 5 * gp.ui.inventorySlotRow;
+            if (gp.player.inventory.get(choose).name.equals("Milk")) {
+
+                if (gp.player.physical == gp.player.maxPhysical) {
+                    gp.ui.currentDialogue = "You are full off energy!\nDon't need to drink milk :>";
+                    gp.gameState = gp.feedCowYesState;
+                } else {
+                    gp.player.inventory.get(choose).tradeCount--;
+                    gp.player.inventory.remove(choose);
+                    gp.eHandler.addPhysical(8);
+                }
+            }
         } 
         else if (key == KeyEvent.VK_B || key == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;
