@@ -276,6 +276,7 @@ public class Fishing_Rod {
         castFrame = 0;
         rodFrame = 0;
         rod2Frame = 0;
+        gp.stopMusic("Fishing_Rod");
         key.AnnouceCompleteAnimation = false;
     }
 
@@ -300,7 +301,7 @@ public class Fishing_Rod {
                 if (isFishing) {
                     gp.playMusic("Fishing_Rod", 15);
                     if (castFrame >= 11) {
-                        reset();
+                        // reset();
                         gp.stopMusic("Fishing_Rod");
                         gp.playSoundEffect("spash", 16);
                         key.AnnouceCompleteAnimation = true;
