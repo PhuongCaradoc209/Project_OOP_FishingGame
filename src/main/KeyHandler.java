@@ -147,16 +147,8 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (key == KeyEvent.VK_ENTER) {
-            if (gp.ui.commandNum == 0) {
                 gp.playSoundEffect("click_sound", 7);
-                gp.gameState = gp.selectPlayerState;
-            }
-            if (gp.ui.commandNum == 1) {
-                // add later
-            }
-            if (gp.ui.commandNum == 2) {
-                System.exit(0);
-            }
+                enterPressed = true;
         }
     }
 
@@ -176,16 +168,8 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (key == KeyEvent.VK_ENTER) {
-            if (gp.ui.commandNum == 1) {
                 gp.playSoundEffect("click_sound", 7);
-                gp.player.setPlayerImage("Human");
-                gp.gameState = gp.playState;
-            } else if (gp.ui.commandNum == 2) {
-                gp.playSoundEffect("click_sound", 7);
-                gp.player.setPlayerImage("Dino");
-                gp.gameState = gp.playState;
-            }
-            gp.ui.commandNum = 0;
+                enterPressed = true;
         }
     }
 
