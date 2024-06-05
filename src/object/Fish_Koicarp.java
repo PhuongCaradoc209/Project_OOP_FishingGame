@@ -33,42 +33,42 @@ public class Fish_Koicarp extends Entity {
         //Image for tradeState
         tradeState_image = setup("Fish/Koicarp_2",gp.tileSize,gp.tileSize);
 
-//        //Image for FishTank
-//        diagonal_down_left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
-//        diagonal_down_left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
-//        diagonal_down_right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
-//        diagonal_down_right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
-//
-//        left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
-//        left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
-//        right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
-//        right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
-//
-//        diagonal_up_left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
-//        diagonal_up_left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
-//        diagonal_up_right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
-//        diagonal_up_right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
-//    }
-//
-//    public void setAction() {
-//        actionLookCounter++;
-//        if (actionLookCounter == 120) {
-//            Random random = new Random();
-//            int i = random.nextInt(150) + 1;
-//            if (i <= 25) {
-//                direction = "diagonalDownLeft";
-//            } else if (i <= 50) {
-//                direction = "diagonalDownRight";
-//            } else if (i <= 75) {
-//                direction = "right";
-//            } else if (i <= 100) {
-//                direction = "left";
-//            } else if (i <= 125) {
-//                direction = "diagonalUpLeft";
-//            } else {
-//                direction = "diagonalUpRight";
-//            }
-//            actionLookCounter = 0;
-//        }
+       //Image for FishTank
+       diagonal_down_left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
+       diagonal_down_left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
+       diagonal_down_right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
+       diagonal_down_right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
+
+       left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
+       left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
+       right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
+       right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
+
+       diagonal_up_left1 = setup("Animal/Fish_Koicarp_left", 100, 100);
+       diagonal_up_left2 = setup("Animal/Fish_Koicarp_left_2", 100, 100);
+       diagonal_up_right1 = setup("Animal/Fish_Koicarp_right", 100, 100);
+       diagonal_up_right2 = setup("Animal/Fish_Koicarp_right_2", 100, 100);
+   }
+
+   public void setAction() {
+       actionLookCounter++;
+       if (actionLookCounter == 120) {
+           Random random = new Random();
+           int i = random.nextInt(150) + 1;
+           if (i <= 25) {
+               direction = "diagonalDownLeft";
+           } else if (i <= 50) {
+               direction = "diagonalDownRight";
+           } else if (i <= 75) {
+               direction = "right";
+           } else if (i <= 100) {
+               direction = "left";
+           } else if (i <= 125) {
+               direction = "diagonalUpLeft";
+           } else {
+               direction = "diagonalUpRight";
+           }
+           actionLookCounter = 0;
+       }
     }
 }
