@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //SYSTEM
     public TileManager tileMgr = new TileManager(this);
-    public CollectionManagement collectionM = new CollectionManagement(this) ;
+    public CollectionManagement collectionM = new CollectionManagement(this);
     public KeyHandler keyHandler = new KeyHandler(this);
     Sound music = new Sound();
     Sound soundEffect = new Sound();
@@ -120,12 +120,11 @@ public class GamePanel extends JPanel implements Runnable {
         g2 = (Graphics2D) tempScreen.getGraphics();
     }
 
-    public void restart(){
+    public void restart() {
         player.setDefaultValues();
         player.setDefaultCharacterImage();
         player.setItems();
         aSetter.setNPC();
-        aSetter.setAnimal(currentMap);
         enviMgr.setUp();
     }
 
@@ -198,7 +197,26 @@ public class GamePanel extends JPanel implements Runnable {
             //ENVIRONMENT
             enviMgr.update();
         }
+        if (gameState == fishTankState) {
+            stopMusic("Bird");
+            playMusic("Background", 2);
+
+            //FISH
+            for (int i = 0; i < animal[1].size(); i++) {
+                if (animal[1].get(i) != null) {
+                    animal[1].get(i).update(true);
+                }
+            }
+
+            //OBJECT
+            for (int i = 0; i < obj[1].size(); i++) {
+                if (obj[1].get(i) != null) {
+                    obj[1].get(i).update(false);
+                }
+            }
+        }
     }
+
     public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
@@ -262,8 +280,20 @@ public class GamePanel extends JPanel implements Runnable {
 
             //ENVIRONMENT
             enviMgr.draw(g2);
-        }
+        } else if (gameState == fishTankState) {
+            //TILE
+            tileMgr.draw(g2);
 
+            //DRAW FISH
+            for (int i = 0; i < animal[1].size(); i++) {
+                animal[1].get(i).draw(g2);
+            }
+
+            //DRAW OBJ
+            for (int i = 0; i < obj[1].size(); i++) {
+                obj[1].get(i).draw(g2);
+            }
+        }
         //UI
         ui.draw(g2);
 
@@ -292,4 +322,16 @@ public class GamePanel extends JPanel implements Runnable {
         soundEffect.setField(i);
         soundEffect.playSE(soundName);
     }
+    public void playSpecifiedSoundEffect(String soundName, int i) {
+        if (!soundEffect.isPlaying(soundName)){
+            soundEffect.setField(i);
+            soundEffect.playSpecifiedSE(soundName);
+        }
+    }
+
+    public void stopSpecifiedSoundEffect(String soundName){
+        soundEffect.stop(soundName);
+    }
+
+
 }

@@ -7,7 +7,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // let window properly close when user clicks the close(x) button
         window.setResizable(false); 
         window.setTitle("2D Adventure");
-
+        window.setUndecorated(true);    //remove top bar
         
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

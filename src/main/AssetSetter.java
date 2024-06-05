@@ -6,11 +6,15 @@ import entity.NPC_OldMan;
 import object.*;
 import tile_interactive.IT_Door_close;
 
+import java.util.Random;
+
 public class AssetSetter {
     GamePanel gp;
     private int i,mapNum;
+    private Random random;
     public AssetSetter(GamePanel gp) {
         this.gp = gp;
+        random = new Random();
     }
 
     public void setObject() {
@@ -90,6 +94,64 @@ public class AssetSetter {
         gp.obj[mapNum].add(new OBJ_WALL_TOP(gp));
         gp.obj[mapNum].get(i).worldX = 22 * gp.tileSize;
         gp.obj[mapNum].get(i).worldY = 7 * gp.tileSize;
+        i++;
+
+        //TREE
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 16 * gp.tileSize - 30;
+        gp.obj[mapNum].get(i).worldY = 11 * gp.tileSize + 20;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 16 * gp.tileSize - gp.tileSize/2;
+        gp.obj[mapNum].get(i).worldY = -1 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 17 * gp.tileSize + gp.tileSize/2;
+        gp.obj[mapNum].get(i).worldY = -1 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 20 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = -1 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 21 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 0 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 23 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 0 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 22 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 1 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 19 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = gp.tileSize/2 - 20;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 22 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 13 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 23 * gp.tileSize + 13;
+        gp.obj[mapNum].get(i).worldY = 13 * gp.tileSize + 15;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 24 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 12 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 24 * gp.tileSize - 20;
+        gp.obj[mapNum].get(i).worldY = 9 * gp.tileSize;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_2(gp));
+        gp.obj[mapNum].get(i).worldX = 24 * gp.tileSize;
+        gp.obj[mapNum].get(i).worldY = 6 * gp.tileSize + 20;
+        i++;
+        gp.obj[mapNum].add(new OBJ_Tree_1(gp));
+        gp.obj[mapNum].get(i).worldX = 24 * gp.tileSize - 20;
+        gp.obj[mapNum].get(i).worldY = 5 * gp.tileSize;
         i++;
 
         //Interior
@@ -190,6 +252,104 @@ public class AssetSetter {
             gp.animal[mapNum].get(i).worldX = gp.tileSize * 17;
             gp.animal[mapNum].get(i).worldY = gp.tileSize * 2;
             i++;
+        }else if (mapNum == 1) {
+            //FISH TANK STATE
+            for (int j = 0; j < gp.player.inventory.size(); j++) {
+                if (gp.player.inventory.get(j).caught) {
+                    switch (gp.player.inventory.get(j).name) {
+                        case "Big Head Carp":
+                            gp.animal[mapNum].add(new Fish_Bigheadcarp(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Clown Fish":
+                            gp.animal[mapNum].add(new Fish_Clownfish(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Coelacanth":
+                            gp.animal[mapNum].add(new Fish_Coelacanths(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Grasscarp":
+                            gp.animal[mapNum].add(new Fish_Grasscarp(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Hammer Head":
+                            gp.animal[mapNum].add(new Fish_Hammerhead(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Herring":
+                            gp.animal[mapNum].add(new Fish_Herring(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Koi Carp":
+                            gp.animal[mapNum].add(new Fish_Koicarp(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Pomfret":
+                            gp.animal[mapNum].add(new Fish_Pomfret(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Ray":
+                            gp.animal[mapNum].add(new Fish_Ray(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Red Arowana":
+                            gp.animal[mapNum].add(new Fish_Redarowna(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Remora":
+                            gp.animal[mapNum].add(new Fish_Remora(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Shark":
+                            gp.animal[mapNum].add(new Fish_Shark(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Silvercarp":
+                            gp.animal[mapNum].add(new Fish_Silvercarp(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Sun Fish":
+                            gp.animal[mapNum].add(new Fish_Sunfish(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                        case "Sword Fish":
+                            gp.animal[mapNum].add(new Fish_Swordfish(gp));
+                            gp.animal[mapNum].get(i).worldX = gp.tileSize * random.nextInt(11) + 3;
+                            gp.animal[mapNum].get(i).worldY = gp.tileSize * random.nextInt(7) + 2;
+                            i++;
+                            break;
+                    }
+                }
+            }
         }
     }
     public void setInteractiveTile() {
