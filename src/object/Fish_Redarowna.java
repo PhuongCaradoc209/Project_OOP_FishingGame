@@ -10,8 +10,7 @@ public class Fish_Redarowna extends Entity {
         super(gp);
         fishRarity = "UNCOMMON";
         name = "Red Arowana";
-        price = 5;
-        fishStar = 2;
+        price = 9;
 
         getImage(gp);
         size = gp.tileSize * 2 + gp.tileSize/2;

@@ -11,8 +11,8 @@ public class Fish_Bigheadcarp extends Entity {
         super(gp);
         fishRarity = "COMMON";
         name = "Big Head Carp";
-        price = 1;
-        fishStar = 1;
+        price = 2;
+
 
         getImage(gp);
         size = gp.tileSize * 2;
