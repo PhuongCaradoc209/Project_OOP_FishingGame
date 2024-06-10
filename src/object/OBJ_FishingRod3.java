@@ -8,7 +8,7 @@ public class OBJ_FishingRod3 extends Entity{
             super(gp);
             caught = true;
             name = "Fishing Rod 3";
-            price = 30;
+            price = 150;
             count = 0;
             rod = 3;
             collection_image = setup("Item/fishingrod3",gp.tileSize,gp.tileSize);
