@@ -10,8 +10,8 @@ public class Fish_Ray extends Entity {
         super(gp);
         fishRarity = "COMMON";
         name = "Ray";
-        price = 11;
-        fishStar = 3;
+        price = 12;
+
 
         getImage(gp);
         size = gp.tileSize * 3 + gp.tileSize/2;
