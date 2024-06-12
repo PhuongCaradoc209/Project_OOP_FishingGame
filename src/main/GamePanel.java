@@ -50,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     public EventHandler eHandler = new EventHandler(this);
     EnvironmentManager enviMgr = new EnvironmentManager(this);
+    Config config = new Config(this);
     Thread gameThread;
 
     //CHECK COLLISION
@@ -118,6 +119,11 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = tittleState;
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
+
+        //SET FULL SCREEN
+        if (fullScreenOn){
+            setFullScreen();
+        }
     }
 
     public void restart() {
@@ -128,6 +134,16 @@ public class GamePanel extends JPanel implements Runnable {
         enviMgr.setUp();
     }
 
+    public void setFullScreen() {
+        //GET LOCAL SCREEN DEVICE
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        gd.setFullScreenWindow(Main.window);
+
+        //GET FULL SCREEN WIDTH AND HEIGHT
+        screenHeight2 = Main.window.getHeight();
+        screenWidth2 = Main.window.getWidth();
+    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
