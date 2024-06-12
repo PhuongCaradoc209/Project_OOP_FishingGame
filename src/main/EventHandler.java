@@ -2,7 +2,7 @@ package main;
 
 public class EventHandler {
     GamePanel gp;
-    EventRect[][][] eventRect;
+    private EventRect[][][] eventRect;
     private int count;
 
     public EventHandler(GamePanel gp) {
@@ -54,7 +54,6 @@ public class EventHandler {
                     fullOfInventory(gp.notificationState);
                 }
             }
-        }
         if (!gp.keyHandler.AnnouceCompleteAnimation) {
             count = 0;
         }

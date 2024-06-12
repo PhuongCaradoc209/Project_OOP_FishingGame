@@ -635,6 +635,9 @@ public class UI {
         volumeWidth = 24 * gp.soundEffect.volumeScale;
         g2.fillRect(textX, textY + 6, volumeWidth, 12);
         drawSubWindow1(volumeWidth + 5 + gp.tileSize * 41 / 4, textY, 13, 25, colorOfVolume, Color.BLACK, 2, 5);
+
+        //SAVE
+        gp.config.saveConfig();
     }
 
     private void options_fullScreenNotification(int frameX, int frameY) {

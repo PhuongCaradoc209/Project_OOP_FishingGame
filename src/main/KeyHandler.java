@@ -11,7 +11,7 @@ public class KeyHandler implements KeyListener {
     // DEBUG
     boolean checkDrawTime = false;
     GamePanel gp;
-    public boolean isMove = false;
+    private boolean isMove = false;
     int temp_map;
     double temp_woldX, temp_woldY;
 
