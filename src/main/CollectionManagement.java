@@ -6,7 +6,7 @@ import object.*;
 import java.util.Random;
 
 public class CollectionManagement {
-    public Entity[] collection;
+    Entity[] collection;
     GamePanel gp;
 
 

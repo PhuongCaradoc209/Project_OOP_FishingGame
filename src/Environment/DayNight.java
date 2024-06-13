@@ -13,18 +13,17 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class DayNight {
-    GamePanel gp;
-    BufferedImage darknessFilter;
-    int circleSize = 350;
-    int dayCounter;
-    float filterAlpha = 0f;
-    final int day = 0;
-    final int dusk = 1;
-    final int night = 2;
-    final int dawn = 3;
-    int dayState = day;
-    float levelOfBlue = 0.6f;
-    public BufferedImage iDay, iDusk, iDawn, iNight;
+    private BufferedImage darknessFilter;
+    private int circleSize = 350;
+    private int dayCounter;
+    private float filterAlpha = 0f;
+    private final int day = 0;
+    private final int dusk = 1;
+    private final int night = 2;
+    private final int dawn = 3;
+    private int dayState = day;
+    private float levelOfBlue = 0.6f;
+    private BufferedImage iDay, iDusk, iDawn, iNight;
     Area screenArea;
     public DayNight(GamePanel gp) {
         //ICON
