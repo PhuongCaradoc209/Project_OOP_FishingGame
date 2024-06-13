@@ -39,12 +39,12 @@ public class UI {
     // SETTING
     public int commandNum = 0;
     int subState = 0;
-    public int playerSlotCol = 0, playerSlotRow = 0;
-    public int npcSlotCol = 0, npcSlotRow = 0;
-    public int collectionSlotCol = 0, collectionSlotRow = 0;
-    public int inventorySlotCol = 0, inventorySlotRow = 0;
-    public int commonFish = 0, uncommonFish = 0, rareFish = 0, legendaryFish = 0, total = 0;
-    public String fishName = "", fishPrice = "", fishRarity = " ", desFishing = " ", desCollections = " ";
+    int playerSlotCol = 0, playerSlotRow = 0;
+    int npcSlotCol = 0, npcSlotRow = 0;
+    int collectionSlotCol = 0, collectionSlotRow = 0;
+    int inventorySlotCol = 0, inventorySlotRow = 0;
+    int commonFish = 0, uncommonFish = 0, rareFish = 0, legendaryFish = 0, total = 0;
+    String fishName = "", fishPrice = "", fishRarity = " ", desFishing = " ", desCollections = " ";
 
     public Entity npc, cow;
     private int counter = 0;
