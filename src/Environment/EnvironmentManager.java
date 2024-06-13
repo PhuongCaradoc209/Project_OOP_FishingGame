@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class EnvironmentManager {
     GamePanel gp;
-    DayNight dayNight;
+    private DayNight dayNight;
     public EnvironmentManager(GamePanel gp){
         this.gp = gp;
     }
